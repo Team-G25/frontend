@@ -7,6 +7,7 @@ const theme = {
     gray: '#848688',
     gray1: 'rgba(229, 229, 229, 0.60)',
     gray2: 'rgba(40, 40, 40, 0.70)',
+    gray3: '#CCCCCC',
     red: '#FF4864',
     red_hover: 'rgba(255, 72, 100, 0.65)',
     pink: '#FFC9D1',
@@ -26,6 +27,7 @@ const theme = {
       black: 900,
     },
     size: {
+      xSmall: '10px',
       small: '12px',
       medium: '16px',
       large: '20px',
