@@ -3,14 +3,15 @@
     "baseUrl": "src",
     "paths": {
       "@/*": ["*"],
-      "@svgs/*": ["assets/svgs/*.svg"],  
-      "@images/*": ["assets/images/*.png"],  
+      "@svgs/*": ["assets/svgs/*.svg"],
+      "@images/*": ["assets/images/*.png"],
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@test/*": ["test/*"]
     },
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true  
+    "allowSyntheticDefaultImports": true
   }
 }

@@ -13,7 +13,7 @@ const Title = styled.h1`
   font-family: ${({ theme }) => theme.font.family};
   font-size: ${({ theme }) => theme.font.size.xLarge};
   font-weight: ${({ theme }) => theme.font.weight.bold};
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${({ theme }) => theme.colors.black};
 `;
 
 const StyledButton = styled.button`

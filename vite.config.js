@@ -1,5 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
+import svgr from 'vite-plugin-svgr';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import eslintPlugin from 'vite-plugin-eslint';
@@ -7,7 +8,7 @@ import eslintPlugin from 'vite-plugin-eslint';
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
 
 export default defineConfig({
-  plugins: [react(), eslintPlugin()],
+  plugins: [react(), eslintPlugin(), svgr()],
   resolve: {
     alias: {
       '@': path.resolve(__dirname, 'src'),
@@ -17,8 +18,9 @@ export default defineConfig({
       '@components': path.resolve(__dirname, 'src/components'),
       '@pages': path.resolve(__dirname, 'src/pages'),
       '@styles': path.resolve(__dirname, 'src/styles'),
+      '@test': path.resolve(__dirname, 'src/test'),
     },
-    extensions: ['.js', '.jsx', '.svg', '.png'],
+    extensions: ['.js', '.jsx', '.svg', '.png', '.jpg'],
   },
   assetsInclude: ['**/*.png', '**/*.svg'],
   server: {
