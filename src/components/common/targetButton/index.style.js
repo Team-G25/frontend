@@ -1,6 +1,15 @@
 import styled from 'styled-components';
 import theme from '@/styles/theme';
 
+export const Title = styled.h1`
+  margin-bottom: 12px;
+
+  font-family: ${theme.font.family};
+  font-size: ${theme.font.size.medium};
+  font-weight: ${theme.font.weight.bold};
+  color: ${theme.colors.black2};
+`;
+
 export const ButtonContainer = styled.section`
   display: flex;
   width: 96px;
