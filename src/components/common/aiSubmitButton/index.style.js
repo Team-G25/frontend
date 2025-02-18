@@ -19,5 +19,5 @@ export const StyledButton = styled.button`
 export const ArrowIcon = styled(ArrowRight)`
   width: 20px;
   height: 20px;
-  color: white;
+  color: ${theme.colors.white};
 `;
