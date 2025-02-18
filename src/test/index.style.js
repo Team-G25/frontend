@@ -6,7 +6,7 @@ export const ComponentSection = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 8px;
 `;
 
 export const SubTitle = styled.h3`
@@ -15,12 +15,12 @@ export const SubTitle = styled.h3`
 `;
 
 export const Spacing = styled.section`
-  margin: 2rem;
+  margin: 10px;
 `;
 
 export const FlexSpacing = styled.section`
   display: flex;
-  gap: 4rem;
+  gap: 20px;
 `;
 
 export const AutoTestCase = styled.div`
