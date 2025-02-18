@@ -1,12 +1,12 @@
 // 컴포넌트 테스트 용
 import { ComponentSection, SubTitle } from './index.style';
-import Button from '@components/common/Button/Button';
+import AISubmitBtn from '@/components/common/aiSubmitButton/AISubmitBtn';
 
 const index = () => {
   return (
     <ComponentSection>
       <SubTitle>AI 생성 전송 버튼</SubTitle>
-      <Button />
+      <AISubmitBtn />
     </ComponentSection>
   );
 };
