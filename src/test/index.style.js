@@ -4,9 +4,6 @@ import theme from '@/styles/theme';
 export const ComponentSection = styled.section`
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
 `;
 
 export const SubTitle = styled.h3`
