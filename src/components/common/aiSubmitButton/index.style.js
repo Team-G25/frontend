@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 import ArrowRight from '../../../assets/svgs/ic_arrow_right.svg?react';
 
 export const StyledButton = styled.button`
@@ -8,10 +9,10 @@ export const StyledButton = styled.button`
   padding: 8px;
   align-items: center;
   border-radius: 50%;
-  background-color: ${({ theme }) => theme.colors.red};
+  background-color: ${theme.colors.red};
 
   &:hover {
-    background-color: ${({ theme }) => theme.colors.red_hover};
+    background-color: ${theme.colors.red_hover};
   }
 `;
 
