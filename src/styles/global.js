@@ -1,13 +1,6 @@
-/** @jsxImportSource @emotion/react */
-import { css } from '@emotion/react';
+import { createGlobalStyle } from 'styled-components';
 
-export const globalStyles = css`
-  @font-face {
-    font-family: 'GowunDodum-Regular';
-    src: url('/fonts/GowunBatang-Regular.ttf') format('ttf');
-    font-weight: normal;
-    font-style: normal;
-  }
+const GlobalStyle = createGlobalStyle`
   * {
     margin: 0;
     padding: 0;
@@ -15,7 +8,19 @@ export const globalStyles = css`
   }
 
   body {
-    font-family: 'GowunDodum-Regular', sans-serif;
-    background-color: #ffffff;
+    font-family: 'Noto Sans KR', sans-serif;
+    background-color: ${({ theme }) => theme.colors.background};
+    color: ${({ theme }) => theme.colors.text};
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  ul, li {
+    list-style: none;
   }
 `;
+
+export default GlobalStyle;
