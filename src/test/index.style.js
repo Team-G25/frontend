@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import theme from '@/styles/theme';
 
 export const ComponentSection = styled.section`
   display: flex;
@@ -10,7 +11,7 @@ export const ComponentSection = styled.section`
 
 export const SubTitle = styled.h3`
   grid-column: 1 / -1;
-  color: ${({ theme }) => theme.colors.blue};
+  color: ${theme.colors.blue};
 `;
 
 export const Spacing = styled.section`
@@ -26,6 +27,6 @@ export const AutoTestCase = styled.div`
   display: grid;
   padding: 20px 20px;
   grid-template-columns: repeat(auto-fit);
-  border: 1px solid ${({ theme }) => theme.colors.black};
+  border: 1px solid ${theme.colors.black1};
   justify-content: center;
 `;
