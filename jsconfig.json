@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@svgs/*": ["assets/svgs/*.svg"],  
+      "@images/*": ["assets/images/*.png"],  
+      "@components/*": ["components/*"],
+      "@pages/*": ["pages/*"],
+      "@utils/*": ["utils/*"],
+      "@styles/*": ["styles/*"]
+    },
+    "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true  
+  }
+}
