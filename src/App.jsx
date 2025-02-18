@@ -1,20 +1,14 @@
-import React from 'react';
-import Button from './components/common/Button/Button';
+import { ThemeProvider } from 'styled-components';
+import GlobalStyle from './styles/GlobalStyle';
+import theme from './styles/theme';
 
-const App = () => {
-  const handleClick = () => {
-    alert('Button clicked!');
-  };
-
+function App() {
   return (
-    <div>
-      <h1>Emotion Styled Button Example</h1>
-      <Button onClick={handleClick}>Click Me</Button>
-      <Button onClick={handleClick} disabled>
-        Disabled Button
-      </Button>
-    </div>
+    <ThemeProvider theme={theme}>
+      <GlobalStyle />
+      <div>Mailer</div>
+    </ThemeProvider>
   );
-};
+}
 
 export default App;
