@@ -1,14 +1,34 @@
-// 컴포넌트 테스트 용
-import { ComponentSection, SubTitle, Spacing } from './index.style';
+// 컴포넌트 테스트 용 페이지
+import { useState } from 'react';
+import { ComponentSection, Spacing, SubTitle } from './index.style';
+import TargetBtn from '@components/common/targetButton/TargetBtn';
+
 import StudentSelectKeyword from '@components/common/selectKeyword/forStudent/SelectKeyword';
 import WorkerSelectKeyword from '@components/common/selectKeyword/forWorker/SelectKeyword';
 
-import AISubmitBtn from '@/components/common/aiSubmitButton/AISubmitBtn';
-import TargetBtn from '@components/common/targetButton/TargetBtn';
+import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
+import Modal from '@components/common/aiPopUp/AIPopUP';
 
-const index = () => {
+const Index = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const handleOpenModal = () => {
+    setIsModalOpen(true);
+  };
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <>
+      <ComponentSection>
+        {/* 클릭 시 모달 열기 */}
+        <SubTitle onClick={handleOpenModal} style={{ cursor: 'pointer' }}>
+          AI 피드백 팝업창
+        </SubTitle>
+        <Spacing />
+        {isModalOpen && <Modal onClose={handleCloseModal} />}
+      </ComponentSection>
+
       <ComponentSection>
         <SubTitle>키워드 선택 (학생) </SubTitle>
         <StudentSelectKeyword />
@@ -23,6 +43,7 @@ const index = () => {
         <Spacing />
         <TargetBtn />
       </ComponentSection>
+
       <ComponentSection>
         <SubTitle>AI 생성 전송 버튼</SubTitle>
         <Spacing />
@@ -32,4 +53,4 @@ const index = () => {
   );
 };
 
-export default index;
+export default Index;
