@@ -8,6 +8,7 @@ import WorkerSelectKeyword from '@components/common/selectKeyword/forWorker/Sele
 
 import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
 import Modal from '@components/common/aiPopUp/AIPopUP';
+import CreateBtn from '@/components/createBtn/createBtn';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,6 +21,11 @@ const Index = () => {
 
   return (
     <>
+      <ComponentSection>
+        <SubTitle>생성하기 버튼</SubTitle>
+        <CreateBtn />
+      </ComponentSection>
+
       <ComponentSection>
         {/* 클릭 시 모달 열기 */}
         <SubTitle onClick={handleOpenModal} style={{ cursor: 'pointer' }}>
