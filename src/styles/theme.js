@@ -2,6 +2,7 @@ const theme = {
   colors: {
     black1: '#000000',
     black2: '#282828',
+    black3: '#212121',
     white: '#FFFFFF',
     white1: '#FBF8F9',
     gray: '#848688',
@@ -15,6 +16,10 @@ const theme = {
     blue: '#2B149F',
   },
   font: {
+    family:{
+      basic: 'Pretandard',
+      popup: 'Apple SD Gothic Neo',
+    },
     weight: {
       thin: 100,
       extraLight: 200,

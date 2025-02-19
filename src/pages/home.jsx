@@ -11,14 +11,14 @@ const Container = styled.div`
 `;
 
 const Title = styled.h1`
-  font-family: ${theme.font.family};
+  font-family: ${theme.font.basic};
   font-size: ${theme.font.size.xLarge};
   font-weight: ${theme.font.weight.bold};
   color: ${theme.colors.black1};
 `;
 
 const StyledButton = styled.button`
-  font-family: ${theme.font.family};
+  font-family: ${theme.font.basic};
   font-size: ${theme.font.size.medium};
   font-weight: ${theme.font.weight.semiBold};
   color: ${theme.colors.white};
