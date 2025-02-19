@@ -27,6 +27,7 @@ const theme = {
       black: 900,
     },
     size: {
+      xSmall: '10px',
       small: '12px',
       medium: '16px',
       large: '20px',
