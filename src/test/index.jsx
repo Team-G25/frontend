@@ -2,16 +2,18 @@
 import { useState } from 'react';
 import { ComponentSection, Spacing, SubTitle } from './index.style';
 import TargetBtn from '@components/common/targetButton/TargetBtn';
+
+import StudentSelectKeyword from '@components/common/selectKeyword/forStudent/SelectKeyword';
+import WorkerSelectKeyword from '@components/common/selectKeyword/forWorker/SelectKeyword';
+
 import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
 import Modal from '@components/common/aiPopUp/AIPopUP';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const handleOpenModal = () => {
     setIsModalOpen(true);
   };
-
   const handleCloseModal = () => {
     setIsModalOpen(false);
   };
@@ -26,11 +28,22 @@ const Index = () => {
         <Spacing />
         {isModalOpen && <Modal onClose={handleCloseModal} />}
       </ComponentSection>
+
+      <ComponentSection>
+        <SubTitle>키워드 선택 (학생) </SubTitle>
+        <StudentSelectKeyword />
+      </ComponentSection>
+      <ComponentSection>
+        <SubTitle>키워드 선택 (직장인) </SubTitle>
+        <WorkerSelectKeyword />
+      </ComponentSection>
+
       <ComponentSection>
         <SubTitle>대상 버튼(학생/직장인)</SubTitle>
         <Spacing />
         <TargetBtn />
       </ComponentSection>
+
       <ComponentSection>
         <SubTitle>AI 생성 전송 버튼</SubTitle>
         <Spacing />
