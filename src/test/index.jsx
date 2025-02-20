@@ -8,7 +8,9 @@ import WorkerSelectKeyword from '@components/common/selectKeyword/forWorker/Sele
 
 import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
 import Modal from '@components/common/aiPopUp/AIPopUP';
-import CreateBtn from '@/components/createBtn/createBtn';
+
+import CreateBtn from '@/components/common/createBtn/CreateBtn';
+import SubmitBtn from '@/components/common/submitBtn/SubmitBtn';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,7 +24,14 @@ const Index = () => {
   return (
     <>
       <ComponentSection>
+        <SubTitle>메일 전송 버튼들</SubTitle>
+        <Spacing />
+        <SubmitBtn />
+      </ComponentSection>
+      
+      <ComponentSection>
         <SubTitle>생성하기 버튼</SubTitle>
+        <Spacing />
         <CreateBtn />
       </ComponentSection>
 

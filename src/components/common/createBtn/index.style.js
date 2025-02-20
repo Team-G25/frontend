@@ -14,11 +14,9 @@ export const StyledButton = styled.button`
     border-radius: 8px;
     height: 38px;
     width: 96px;
-    left: 0;
-    top: 0;
 
     &:hover {
         background-color: ${theme.colors.red_hover};
-        color: ${theme.colors.white};
+        font-weight: ${theme.font.weight.bold};
     }
 `;
