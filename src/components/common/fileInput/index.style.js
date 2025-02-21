@@ -6,10 +6,9 @@ import PhotoIcon from '../../../assets/svgs/ic_photo.svg?react'
 
 export const StyledFrame = styled.div`
     display: flex;
-    flex-direction: column;
     height: 74px;
     width: 612px;
-    padding: 17px;
+    padding: 17px 0 17px 32px;
     border-radius: 60px;
     background-color: ${theme.colors.white1}
 `;
