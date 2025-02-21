@@ -12,6 +12,7 @@ import Modal from '@components/common/aiPopUp/AIPopUP';
 import CreateBtn from '@/components/common/createBtn/CreateBtn';
 import SubmitBtn from '@/components/common/submitBtn/SubmitBtn';
 import SubmitAlert from '@/components/common/submitAlert/SubmitAlert';
+import FileInput from '@/components/common/fileInput/FileInput';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -24,6 +25,12 @@ const Index = () => {
 
   return (
     <>
+      <ComponentSection>
+        <SubTitle>파일 입출력 </SubTitle>
+        <Spacing />
+        <FileInput />
+      </ComponentSection>
+      
       <ComponentSection>
         <SubTitle>메일 전송 성공 알림 </SubTitle>
         <Spacing />
