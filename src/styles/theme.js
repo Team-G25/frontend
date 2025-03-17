@@ -17,7 +17,7 @@ const theme = {
   },
   font: {
     family:{
-      basic: 'Pretandard',
+      basic: 'Pretendard',
       popup: 'Apple SD Gothic Neo',
     },
     weight: {
