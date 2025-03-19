@@ -23,7 +23,7 @@ export default defineConfig({
     },
     extensions: ['.js', '.jsx', '.svg', '.png', '.jpg'],
   },
-  assetsInclude: ['**/*.png', '**/*.svg'],
+  assetsInclude: ['**/*.png', '**/*.svg', '**/*.ttf'],
   server: {
     fs: {
       strict: false,

@@ -1,46 +1,44 @@
 import styled from 'styled-components';
-import theme from '@/styles/theme';
-
-const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100vh;
-  background-color: ${theme.colors.white1};
-`;
-
-const Title = styled.h1`
-  font-family: ${theme.font.basic};
-  font-size: ${theme.font.size.xLarge};
-  font-weight: ${theme.font.weight.bold};
-  color: ${theme.colors.black1};
-`;
-
-const StyledButton = styled.button`
-  font-family: ${theme.font.basic};
-  font-size: ${theme.font.size.medium};
-  font-weight: ${theme.font.weight.semiBold};
-  color: ${theme.colors.white};
-
-  padding: 12px 24px;
-  border-radius: 8px;
-  background-color: ${theme.colors.red};
-  transition: background 0.3s;
-
-  &:hover {
-    background-color: ${theme.colors.red_hover};
-  }
-`;
+import Sidebar from '@components/common/sideBar/SideBar';
+import MainImage from '../assets/images/main-image1.svg?react';
 
 const Home = () => {
   return (
     <Container>
-      <Title>Welcome to Mailer 📤 </Title>
-
-      <StyledButton>Get Started</StyledButton>
+      <Sidebar />
+      <MainContent>
+        <ImageWrapper>
+          <MainImage />
+        </ImageWrapper>
+      </MainContent>
     </Container>
   );
 };
 
 export default Home;
+
+const Container = styled.div`
+  display: flex;
+  width: 100%;
+  height: 100vh;
+`;
+
+const MainContent = styled.div`
+  flex-grow: 1;
+  height: 100vh;
+  position: relative;
+`;
+
+const ImageWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
+`;
