@@ -3,8 +3,9 @@ import { useState } from "react";
 import { PageContainer, FormContainer, BottomContainer } from "./index.style";
 import InputInfo from "./components/common/inputInfo/InputInfo";
 import MailWrite from "./components/common/mailWrite/MailWrite";
-import FileInput2 from "@/components/common/FileInput2/FileInput2";
+import FileInput from "@/components/common/fileInput/FileInput";
 import SubmitBtn from "@/components/common/submitBtn/SubmitBtn";
+
 
 const MailManually = () => {
     const [mailData, setMailData] = useState({
@@ -54,6 +55,7 @@ const MailManually = () => {
         console.log('보내기', formData);
     }
     
+
     return(
         <PageContainer>
             <FormContainer>
@@ -67,7 +69,7 @@ const MailManually = () => {
                     onChange={handleChange}
                 />
                 <BottomContainer>
-                    <FileInput2 />
+                    <FileInput width="822px"/>
                     <SubmitBtn onSave={handleSave} onSend={handleSend}/>
                 </BottomContainer>
             </FormContainer>
