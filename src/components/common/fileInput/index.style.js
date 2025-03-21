@@ -4,13 +4,16 @@ import FileIcon from '../../../assets/svgs/ic_file.svg?react'
 import PhotoIcon from '../../../assets/svgs/ic_photo.svg?react'
 
 
-export const StyledFrame = styled.div`
+export const StyledFrame = styled.div.attrs((props) => ({
+    style: {
+        width: props.width || "612px", // 기본값 612px
+    },
+}))`
     display: flex;
     height: 74px;
-    width: 612px;
     padding: 17px 0 17px 32px;
     border-radius: 60px;
-    background-color: ${theme.colors.white1}
+    background-color: ${theme.colors.white1};
 `;
 
 export const ButtonContainer = styled.div`

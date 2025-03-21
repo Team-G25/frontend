@@ -1,8 +1,8 @@
 import { StyledButton, ButtonContainer, StyledFrame, File, Photo } from "./index.style";
 
-const FileInput = ({onclick}) => {
+const FileInput = ({width, onclick}) => {
     return (
-        <StyledFrame>
+        <StyledFrame width={width}>
             <ButtonContainer>
                 <StyledButton onclick={onclick}>
                     <Photo />
