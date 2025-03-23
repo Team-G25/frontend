@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import theme from '@styles/theme';
 
 export const Container = styled.section`
-  width: 200px;
+  width: 210px;
   height: 100%;
   padding: 35px 24px 0 24px;
   background-color: ${theme.colors.white1};

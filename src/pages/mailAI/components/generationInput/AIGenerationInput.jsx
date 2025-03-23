@@ -13,7 +13,7 @@ import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
 
 const MAX_LENGTH = 200;
 
-const AIGenerationInput = () => {
+const AIGenerationInput = ({ onSubmit }) => {
   const [input, setInput] = useState('');
 
   const handleChange = (e) => {
@@ -28,15 +28,25 @@ const AIGenerationInput = () => {
       return;
     }
 
-    console.log('입력된 상황 내용:', input);
+    // AI 생성 로직 필요
+
+    // 상위 컴포넌트에 입력 전달
+    onSubmit?.(input); // optional chaining 사용
   };
 
   return (
     <Container>
       <Title>AI 생성</Title>
-      <SubTitle>생성하고자 하는 메일의 상황을 작성해주세요.</SubTitle>
+      <SubTitle>
+        생성하고자 하는 메일의 상황을 <br />
+        작성해주세요.
+      </SubTitle>
       <InputArea>
-        <Textarea value={input} onChange={handleChange} />
+        <Textarea
+          value={input}
+          onChange={handleChange}
+          placeholder="예: 개인 사정으로 인한 회의 불참 메일"
+        />
         <Counter>
           {input.length}/{MAX_LENGTH}자
         </Counter>
