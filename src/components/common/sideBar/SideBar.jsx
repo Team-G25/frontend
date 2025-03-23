@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   SidebarContainer,
   Logo,
@@ -16,6 +17,7 @@ import Profile from '../../../assets/svgs/ic_profile.svg?react';
 
 const Sidebar = () => {
   const [isMailMenuOpen, setIsMailMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <SidebarContainer>
@@ -29,9 +31,13 @@ const Sidebar = () => {
         </MenuItem>
         {isMailMenuOpen && (
           <SubMenu>
-            <MenuItem>템플릿</MenuItem>
-            <MenuItem>AI 작성</MenuItem>
-            <MenuItem>수동 작성</MenuItem>
+            <MenuItem onClick={() => navigate('/mailTemplate')}>
+              템플릿
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/mailAI')}>AI 작성</MenuItem>
+            <MenuItem onClick={() => navigate('/mailManually')}>
+              수동 작성
+            </MenuItem>
           </SubMenu>
         )}
         <MenuItem>임시보관</MenuItem>
