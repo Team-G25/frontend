@@ -1,11 +1,11 @@
 // 수동 작성 테스트 페이지입니다.
 import { useState } from "react";
-import { PageContainer, FormContainer, BottomContainer } from "./index.style";
+import { PageContainer, MainContent, FormContainer, BottomContainer } from "./index.style";
 import InputInfo from "./components/common/inputInfo/InputInfo";
 import MailWrite from "./components/common/mailWrite/MailWrite";
 import FileInput from "@/components/common/fileInput/FileInput";
 import SubmitBtn from "@/components/common/submitBtn/SubmitBtn";
-
+import Sidebar from "@/components/common/sideBar/SideBar";
 
 const MailManually = () => {
     const [mailData, setMailData] = useState({
@@ -58,21 +58,24 @@ const MailManually = () => {
 
     return(
         <PageContainer>
-            <FormContainer>
-                <InputInfo mailData={mailData} onChange={handleChange} />
-                {errors.to && <p style={{ color: "red" }}>{errors.to}</p>}
-                <MailWrite 
-                    label = "내용 입력"
-                    id = "body"
-                    name = "body"
-                    value = {mailData.body}
-                    onChange={handleChange}
-                />
-                <BottomContainer>
-                    <FileInput width="822px"/>
-                    <SubmitBtn onSave={handleSave} onSend={handleSend}/>
-                </BottomContainer>
-            </FormContainer>
+            <Sidebar />
+            <MainContent>
+                <FormContainer>
+                    <InputInfo mailData={mailData} onChange={handleChange} />
+                    {errors.to && <p style={{ color: "red" }}>{errors.to}</p>}
+                    <MailWrite 
+                        label = "내용 입력"
+                        id = "body"
+                        name = "body"
+                        value = {mailData.body}
+                        onChange={handleChange}
+                    />
+                    <BottomContainer>
+                        <FileInput width="822px"/>
+                        <SubmitBtn onSave={handleSave} onSend={handleSend}/>
+                    </BottomContainer>
+                </FormContainer>
+            </MainContent>
         </PageContainer>
     );
 };
