@@ -16,7 +16,7 @@ const theme = {
     blue: '#2B149F',
   },
   font: {
-    family:{
+    family: {
       basic: 'Pretendard',
       popup: 'Apple SD Gothic Neo',
     },
@@ -34,6 +34,7 @@ const theme = {
     size: {
       xSmall: '10px',
       small: '12px',
+      sMedium: '14px',
       medium: '16px',
       large: '20px',
       xLarge: '24px',

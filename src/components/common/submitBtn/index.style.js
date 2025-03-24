@@ -3,6 +3,7 @@ import theme from "@/styles/theme";
 
 export const ButtonContainer = styled.section`
     display: flex;
+    align-items: center;
     width: 254px;
     height: 64px;
     gap: 12px;
