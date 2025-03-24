@@ -6,6 +6,7 @@ import SelectKeywordWorker from '@components/common/selectKeyword/forWorker/Sele
 import {
   SidebarContainer,
   SectionTitle,
+  TargetBox,
   KeywordContainer,
 } from './index.style';
 
@@ -15,9 +16,9 @@ const TemplateSidebar = () => {
   return (
     <SidebarContainer>
       <SectionTitle>템플릿</SectionTitle>
-
-      <TargetBtn selected={selectedTarget} onSelect={setSelectedTarget} />
-
+      <TargetBox>
+        <TargetBtn selected={selectedTarget} onSelect={setSelectedTarget} />
+      </TargetBox>
       <KeywordContainer>
         {selectedTarget === '학생' ? (
           <SelectKeywordStudent />

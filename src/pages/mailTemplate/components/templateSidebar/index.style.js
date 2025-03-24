@@ -10,13 +10,17 @@ export const SidebarContainer = styled.section`
   flex-direction: column;
 `;
 
-export const SectionTitle = styled.h2`
-  font-size: ${theme.font.size.medium};
-  font-weight: ${theme.font.weight.bold};
+export const SectionTitle = styled.h1`
   color: ${theme.colors.black2};
-  margin: 20px 0 8px;
+  font-family: ${theme.font.family.basic};
+  font-weight: ${theme.font.weight.bold};
+  font-size: ${theme.font.size.large};
+`;
+
+export const TargetBox = styled.div`
+  margin: 32px 0;
 `;
 
 export const KeywordContainer = styled.div`
-  margin-top: 16px;
+  margin-top: 28px;
 `;
