@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import TargetBtn from '@components/common/targetButton/TargetBtn';
 import SelectKeywordStudent from '@components/common/selectKeyword/forStudent/SelectKeyword';
 import SelectKeywordWorker from '@components/common/selectKeyword/forWorker/SelectKeyword';
@@ -10,9 +9,14 @@ import {
   KeywordContainer,
 } from './index.style';
 
-const TemplateSidebar = () => {
-  const [selectedTarget, setSelectedTarget] = useState('학생'); // 기본값: 학생
-
+const TemplateSidebar = ({
+  selectedTarget,
+  setSelectedTarget,
+  selectedKeyword,
+  setSelectedKeyword,
+  selectedDetail,
+  setSelectedDetail,
+}) => {
   return (
     <SidebarContainer>
       <SectionTitle>템플릿</SectionTitle>
@@ -21,9 +25,19 @@ const TemplateSidebar = () => {
       </TargetBox>
       <KeywordContainer>
         {selectedTarget === '학생' ? (
-          <SelectKeywordStudent />
+          <SelectKeywordStudent
+            selectedKeyword={selectedKeyword}
+            setSelectedKeyword={setSelectedKeyword}
+            selectedDetail={selectedDetail}
+            setSelectedDetail={setSelectedDetail}
+          />
         ) : (
-          <SelectKeywordWorker />
+          <SelectKeywordWorker
+            selectedKeyword={selectedKeyword}
+            setSelectedKeyword={setSelectedKeyword}
+            selectedDetail={selectedDetail}
+            setSelectedDetail={setSelectedDetail}
+          />
         )}
       </KeywordContainer>
     </SidebarContainer>
