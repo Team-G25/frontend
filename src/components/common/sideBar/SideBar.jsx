@@ -21,7 +21,7 @@ const Sidebar = () => {
 
   return (
     <SidebarContainer>
-      <Logo>
+      <Logo onClick={() => navigate('/')}>
         <LogoImage />
       </Logo>
       <MenuList>
