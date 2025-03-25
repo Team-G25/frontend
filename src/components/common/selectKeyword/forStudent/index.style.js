@@ -7,8 +7,9 @@ export const KeywordContainer = styled.section`
   height: 200px;
   flex-direction: column;
   align-items: flex-start;
-  gap: 6px;
+  gap: 7px;
   position: relative;
+  margin-top: 20px;
 
   label {
     margin-bottom: 10px;
