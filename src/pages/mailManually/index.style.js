@@ -11,14 +11,15 @@ export const PageContainer = styled.div`
 //컨텐츠 컨테이너(사이드바 합치기 위하여 입력구간 분리)
 export const MainContent = styled.div`
   display: flex;
+  width: 100vw;
   height: 100vh;
   padding: 20px;
-  flex-grow: 1;
 `;
 
 //입력구간#1
 export const FormContainer = styled.form`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 20px; /* 각 필드 간 간격 */
   background-color: #ffffff;

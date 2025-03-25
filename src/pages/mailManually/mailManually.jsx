@@ -6,6 +6,8 @@ import MailWrite from "./components/common/mailWrite/MailWrite";
 import FileInput from "@/components/common/fileInput/FileInput";
 import SubmitBtn from "@/components/common/submitBtn/SubmitBtn";
 import Sidebar from "@/components/common/sideBar/SideBar";
+import AIPopUp from '@components/common/aiPopUp/AIPopUp';
+
 
 const MailManually = () => {
     const [mailData, setMailData] = useState({
@@ -18,6 +20,8 @@ const MailManually = () => {
     const [errors, setErrors] = useState({
         to: "",
     })
+
+    const [showModal, setShowModal] = useState(false);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -43,40 +47,47 @@ const MailManually = () => {
     
     const handleSave = () => {
         console.log("임시저장:", mailData);
+        //메일 임시저장 로직
     }
 
     const handleSend = () => {
-        const formData = new FormData();
-        formData.append('to', mailData.to);
-        formData.append('subject', mailData.subject);
-        formData.append('from', mailData.from);
-        formData.append('body', mailData.body);
+        setShowModal(true);
+        // const formData = new FormData();
+        // formData.append('to', mailData.to);
+        // formData.append('subject', mailData.subject);
+        // formData.append('from', mailData.from);
+        // formData.append('body', mailData.body);
 
-        console.log('보내기', formData);
+
+        //메일 저장 로직
     }
     
 
     return(
-        <PageContainer>
-            <Sidebar />
-            <MainContent>
-                <FormContainer>
-                    <InputInfo mailData={mailData} onChange={handleChange} />
-                    {errors.to && <p style={{ color: "red" }}>{errors.to}</p>}
-                    <MailWrite 
-                        label = "내용 입력"
-                        id = "body"
-                        name = "body"
-                        value = {mailData.body}
-                        onChange={handleChange}
-                    />
-                    <BottomContainer>
-                        <FileInput width="822px"/>
-                        <SubmitBtn onSave={handleSave} onSend={handleSend}/>
-                    </BottomContainer>
-                </FormContainer>
-            </MainContent>
-        </PageContainer>
+        <>
+            <PageContainer>
+                <Sidebar />
+                <MainContent>
+                    <FormContainer>
+                        <InputInfo mailData={mailData} onChange={handleChange} />
+                        {errors.to && <p style={{ color: "red" }}>{errors.to}</p>}
+                        <MailWrite 
+                            label = "내용 입력"
+                            id = "body"
+                            name = "body"
+                            value = {mailData.body}
+                            onChange={handleChange}
+                        />
+                        <BottomContainer>
+                            <FileInput width="1340px"/>
+                            <SubmitBtn onSave={handleSave} onSend={handleSend}/>
+                        </BottomContainer>
+                    </FormContainer>
+                </MainContent>
+            </PageContainer>
+
+            {showModal && <AIPopUp onClose={() => setShowModal(false)} />}
+        </>
     );
 };
 

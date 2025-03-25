@@ -1,8 +1,10 @@
-import { StyledFrame } from "./index.style";
+import { StyledFrame, Textarea } from "./index.style";
 
 const MailWrite = ({label, id, name, value, onChange}) => {
     return(
-        <StyledFrame label={label} id={id} name={name} value={value} onChange={onChange} />
+        <StyledFrame>
+            <Textarea label={label} id={id} name={name} value={value} onChange={onChange} />
+        </StyledFrame>
     );
 };
 

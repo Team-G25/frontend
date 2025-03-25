@@ -40,7 +40,7 @@ const Sidebar = () => {
             </MenuItem>
           </SubMenu>
         )}
-        <MenuItem>임시보관</MenuItem>
+        <MenuItem onClick={() => navigate('/mailTemporary')}>임시보관</MenuItem>
       </MenuList>
       <LoginSection>
         <Profile />
