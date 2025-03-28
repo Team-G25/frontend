@@ -1,9 +1,15 @@
 import { StyledFrame, Textarea } from "./index.style";
 
-const MailWrite = ({label, id, name, value, onChange}) => {
+const MailWrite = ({label, bodyRef}) => {
     return(
         <StyledFrame>
-            <Textarea label={label} id={id} name={name} value={value} onChange={onChange} />
+            <Textarea 
+            label={label} 
+            id="body"
+            name="body"
+            ref={bodyRef}
+            placeholder="메일 본문을 입력하세요" 
+             />
         </StyledFrame>
     );
 };

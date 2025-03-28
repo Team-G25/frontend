@@ -1,92 +1,71 @@
-// 수동 작성 테스트 페이지입니다.
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { PageContainer, MainContent, FormContainer, BottomContainer } from "./index.style";
 import InputInfo from "./components/common/inputInfo/InputInfo";
 import MailWrite from "./components/common/mailWrite/MailWrite";
 import FileInput from "@/components/common/fileInput/FileInput";
 import SubmitBtn from "@/components/common/submitBtn/SubmitBtn";
 import Sidebar from "@/components/common/sideBar/SideBar";
-import AIPopUp from '@components/common/aiPopUp/AIPopUp';
-
+import Modal from '@components/common/aiPopUp/AIPopUP';
 
 const MailManually = () => {
-    const [mailData, setMailData] = useState({
-        to: "",
-        subject: "",
-        from: "",
-        body: "",
-    })
-
-    const [errors, setErrors] = useState({
-        to: "",
-    })
-
     const [showModal, setShowModal] = useState(false);
-
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setMailData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
-
-        if (name === "to") {
-            validateEmail(value); // 이메일 입력 시 유효성 검사
-        }
-    }
-
-
-    const validateEmail = (email) => { // 유효성 검사해주는 함수
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; 
-        if (!emailRegex.test(email)) {
-            setErrors((prev) => ({ ...prev, to: "유효한 이메일 주소를 입력하세요." }));
-        } else {
-            setErrors((prev) => ({ ...prev, to: "" })); // 에러 메시지 초기화
-        }
-    };
     
+    // useRef로 각 입력값을 참조
+    const toRef = useRef(null);
+    const subjectRef = useRef(null);
+    const fromRef = useRef(null);
+    const bodyRef = useRef(null);
+
     const handleSave = () => {
-        console.log("임시저장:", mailData);
-        //메일 임시저장 로직
-    }
+        console.log("임시저장:", {
+            to: toRef.current.value,
+            subject: subjectRef.current.value,
+            from: fromRef.current.value,
+            body: bodyRef.current.value,
+        });
+        // 메일 임시저장 로직
+    };
 
     const handleSend = () => {
+        console.log("메일 전송:", {
+            to: toRef.current.value,
+            subject: subjectRef.current.value,
+            from: fromRef.current.value,
+            body: bodyRef.current.value,
+        });
         setShowModal(true);
-        // const formData = new FormData();
-        // formData.append('to', mailData.to);
-        // formData.append('subject', mailData.subject);
-        // formData.append('from', mailData.from);
-        // formData.append('body', mailData.body);
+        // 메일 전송 로직
+    };
 
+    const handleClose = () => {
+        setShowModal(false);
+        console.log("모달 닫습니다.");
+    };
 
-        //메일 저장 로직
-    }
-    
-
-    return(
+    return (
         <>
             <PageContainer>
                 <Sidebar />
                 <MainContent>
                     <FormContainer>
-                        <InputInfo mailData={mailData} onChange={handleChange} />
-                        {errors.to && <p style={{ color: "red" }}>{errors.to}</p>}
+                        <InputInfo 
+                            toRef={toRef} 
+                            subjectRef={subjectRef} 
+                            fromRef={fromRef} 
+                        />
                         <MailWrite 
-                            label = "내용 입력"
-                            id = "body"
-                            name = "body"
-                            value = {mailData.body}
-                            onChange={handleChange}
+                            label="내용 입력"
+                            bodyRef={bodyRef}
                         />
                         <BottomContainer>
-                            <FileInput width="1340px"/>
-                            <SubmitBtn onSave={handleSave} onSend={handleSend}/>
+                            <FileInput width="1340px" />
+                            <SubmitBtn onSave={handleSave} onSend={handleSend} />
                         </BottomContainer>
                     </FormContainer>
                 </MainContent>
             </PageContainer>
 
-            {showModal && <AIPopUp onClose={() => setShowModal(false)} />}
+            {showModal && <Modal onClose={handleClose} />}
         </>
     );
 };

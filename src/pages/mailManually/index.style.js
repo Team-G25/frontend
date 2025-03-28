@@ -17,7 +17,7 @@ export const MainContent = styled.div`
 `;
 
 //입력구간#1
-export const FormContainer = styled.form`
+export const FormContainer = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
