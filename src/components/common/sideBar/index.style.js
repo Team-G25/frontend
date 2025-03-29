@@ -15,6 +15,7 @@ export const Logo = styled.div`
   display: flex;
   margin: 27px 77px 46px 10px;
   width: 93px;
+  cursor: pointer;
 `;
 
 export const LogoImage = styled(MailerLogo)`

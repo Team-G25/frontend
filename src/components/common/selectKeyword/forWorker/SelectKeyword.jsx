@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, Fragment } from 'react';
 import {
   KeywordContainer,
   CustomSelect,
@@ -13,20 +13,23 @@ const keywordLabels = {
   coWorker: '동료',
 };
 
-const SelectKeyword = () => {
-  const [selectedKeyword, setSelectedKeyword] = useState('');
+const SelectKeyword = ({
+  selectedKeyword,
+  setSelectedKeyword,
+  selectedDetail,
+  setSelectedDetail,
+}) => {
   const [isKeywordOpen, setIsKeywordOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
-  const [selectedDetailKeyword, setSelectedDetailKeyword] = useState('');
 
   const handleKeywordSelect = (value) => {
     setSelectedKeyword(value);
-    setSelectedDetailKeyword('');
+    setSelectedDetail('');
     setIsKeywordOpen(false);
   };
 
   const handleDetailSelect = (value) => {
-    setSelectedDetailKeyword(value);
+    setSelectedDetail(value);
     setIsDetailOpen(false);
   };
 
@@ -45,7 +48,7 @@ const SelectKeyword = () => {
             {Object.keys(KEYWORDS.WORKER_KEYWORDS)
               .filter((key) => key !== '')
               .map((key, index, array) => (
-                <>
+                <Fragment key={key}>
                   <SelectItem
                     key={key}
                     onClick={() => handleKeywordSelect(key)}
@@ -53,7 +56,7 @@ const SelectKeyword = () => {
                     {keywordLabels[key]}
                   </SelectItem>
                   {index < array.length - 1 && <div className="divider" />}
-                </>
+                </Fragment>
               ))}
           </SelectList>
         )}
@@ -61,9 +64,7 @@ const SelectKeyword = () => {
       <KeywordContainer>
         <label htmlFor="detail-keyword-select">세부 키워드</label>
         <CustomSelect onClick={() => setIsDetailOpen(!isDetailOpen)}>
-          <span>
-            {selectedDetailKeyword ? selectedDetailKeyword : '세부 키워드 선택'}
-          </span>
+          <span>{selectedDetail || '세부 키워드 선택'}</span>
           <ArrowIcon />
         </CustomSelect>
         {isDetailOpen && selectedKeyword && (
