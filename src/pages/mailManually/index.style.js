@@ -4,15 +4,22 @@ import styled from "styled-components";
 //페이지 배경
 export const PageContainer = styled.div`
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  width: 100%;
+  height: 100vh;
+`;
+
+//컨텐츠 컨테이너(사이드바 합치기 위하여 입력구간 분리)
+export const MainContent = styled.div`
+  display: flex;
+  width: 100vw;
   height: 100vh;
   padding: 20px;
 `;
 
-//입력구간
-export const FormContainer = styled.form`
+//입력구간#1
+export const FormContainer = styled.div`
   display: flex;
+  flex: 1;
   flex-direction: column;
   gap: 20px; /* 각 필드 간 간격 */
   background-color: #ffffff;
@@ -21,7 +28,7 @@ export const FormContainer = styled.form`
   margin-left: auto;
 `;
 
-//버튼구간
+//입력구간#2
 export const BottomContainer = styled.div`
   display: flex;
   justify-content: space-between;

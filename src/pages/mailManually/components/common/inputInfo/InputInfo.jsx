@@ -1,6 +1,6 @@
 import { StyledContainer, TextGroup, StyledLabel, StyledInput } from "./index.style";
 
-const InputInfo = ({mailData, onChange}) => {
+const InputInfo = ({ toRef, subjectRef, fromRef }) => {
     return (
         <StyledContainer>
             <TextGroup>
@@ -9,8 +9,8 @@ const InputInfo = ({mailData, onChange}) => {
                     id="to"
                     name="to"
                     type="text"
-                    value={mailData.to}
-                    onChange={onChange}
+                    ref={toRef}
+                    placeholder="수신자 이메일 입력"
                 />
             </TextGroup>
             <TextGroup>
@@ -19,8 +19,8 @@ const InputInfo = ({mailData, onChange}) => {
                     id="subject"
                     name="subject"
                     type="text"
-                    value={mailData.subject}
-                    onChange={onChange}
+                    ref={subjectRef}
+                    placeholder="메일 제목 입력"
                 />
             </TextGroup>
             <TextGroup>
@@ -29,8 +29,8 @@ const InputInfo = ({mailData, onChange}) => {
                     id="from"
                     name="from"
                     type="text"
-                    value={mailData.from}
-                    onChange={onChange}
+                    ref={fromRef}
+                    placeholder="발신자 이메일 입력"
                 />
             </TextGroup>
         </StyledContainer>

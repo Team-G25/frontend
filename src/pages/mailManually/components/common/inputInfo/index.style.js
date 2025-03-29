@@ -8,7 +8,7 @@ export const StyledContainer = styled.div`
     gap: 16px;
     padding: 16px;
     height: 202px;
-    width: 1096px;
+    width: 100%;
     border-radius: 12px;
     justify-content: space-evenly;
     background-color: ${theme.colors.white1}
