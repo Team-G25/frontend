@@ -22,9 +22,8 @@ const SelectKeyword = ({
   const [isKeywordOpen, setIsKeywordOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  const handleKeywordSelect = (value) => {
-    setSelectedKeyword(value);
-    setSelectedDetail('');
+  const handleKeywordSelect = (key) => {
+    setSelectedKeyword(keywordLabels[key]);
     setIsKeywordOpen(false);
   };
 
@@ -38,9 +37,7 @@ const SelectKeyword = ({
       <KeywordContainer>
         <label htmlFor="keyword-select">키워드</label>
         <CustomSelect onClick={() => setIsKeywordOpen(!isKeywordOpen)}>
-          <span>
-            {selectedKeyword ? keywordLabels[selectedKeyword] : '키워드 선택'}
-          </span>
+          <span>{selectedKeyword || '키워드 선택'}</span>
           <ArrowIcon />
         </CustomSelect>
         {isKeywordOpen && (
@@ -49,10 +46,7 @@ const SelectKeyword = ({
               .filter((key) => key !== '')
               .map((key, index, array) => (
                 <Fragment key={key}>
-                  <SelectItem
-                    key={key}
-                    onClick={() => handleKeywordSelect(key)}
-                  >
+                  <SelectItem onClick={() => handleKeywordSelect(key)}>
                     {keywordLabels[key]}
                   </SelectItem>
                   {index < array.length - 1 && <div className="divider" />}
@@ -61,6 +55,7 @@ const SelectKeyword = ({
           </SelectList>
         )}
       </KeywordContainer>
+
       <KeywordContainer>
         <label htmlFor="detail-keyword-select">세부 키워드</label>
         <CustomSelect onClick={() => setIsDetailOpen(!isDetailOpen)}>
@@ -69,19 +64,18 @@ const SelectKeyword = ({
         </CustomSelect>
         {isDetailOpen && selectedKeyword && (
           <SelectList>
-            {KEYWORDS.WORKER_KEYWORDS[selectedKeyword].map(
-              (option, index, array) => (
-                <>
-                  <SelectItem
-                    key={option.value}
-                    onClick={() => handleDetailSelect(option.label)}
-                  >
-                    {option.label}
-                  </SelectItem>
-                  {index < array.length - 1 && <div className="divider" />}
-                </>
-              ),
-            )}
+            {KEYWORDS.WORKER_KEYWORDS[
+              Object.keys(keywordLabels).find(
+                (k) => keywordLabels[k] === selectedKeyword,
+              )
+            ]?.map((option, index, array) => (
+              <Fragment key={option.value}>
+                <SelectItem onClick={() => handleDetailSelect(option.label)}>
+                  {option.label}
+                </SelectItem>
+                {index < array.length - 1 && <div className="divider" />}
+              </Fragment>
+            ))}
           </SelectList>
         )}
       </KeywordContainer>

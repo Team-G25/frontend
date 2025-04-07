@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Sidebar from '@components/common/sidebar/Sidebar';
 import TemplateSidebar from './components/templateSidebar/TemplateSidebar';
 import MailEditor from './components/mailEditor/MailEditor';
+import { fetchTemplate } from '../../apis/templete/fetchTemplete';
 
 const TemplatePage = () => {
   const [selectedTarget, setSelectedTarget] = useState('학생');
@@ -14,21 +15,29 @@ const TemplatePage = () => {
   const isKeywordSelected = selectedKeyword && selectedDetail;
 
   useEffect(() => {
-    if (isKeywordSelected) {
-      // 임시 템플릿 내용
-      setTemplateContent(`
-        안녕하세요 [교수님 이름],
-        저는 [학과명] [학번] [본인이름]입니다.
+    const loadTemplate = async () => {
+      if (!isKeywordSelected) return;
 
-        다름이 아니라, [상황 설명]으로 인해 수업에 참석하지 못할 것 같습니다.
-        다른 날짜로 조정이 불가피한 상황이라, 출석 인정 받을 수 있는 다른 방법이 있을 지 문의 드립니다.
-        출석 인정이 가능하다면 관련 서류를 발급 받을 수 있는지 확인해보고자 합니다.
+      try {
+        const result = await fetchTemplate({
+          targetName: selectedTarget,
+          keyword1: selectedKeyword,
+          keyword2: selectedDetail,
+        });
 
-        항상 좋은 수업 감사합니다!
-        [본인이름] 드림
-      `);
-    }
-  }, [isKeywordSelected]);
+        if (result?.length > 0) {
+          setTemplateContent(result[0].content);
+        } else {
+          setTemplateContent('해당 템플릿을 찾을 수 없습니다.');
+        }
+      } catch (err) {
+        console.error(err);
+        setTemplateContent('템플릿 불러오기에 실패했습니다.');
+      }
+    };
+
+    loadTemplate();
+  }, [selectedTarget, selectedKeyword, selectedDetail, isKeywordSelected]);
 
   return (
     <PageWrapper>
