@@ -24,8 +24,8 @@ const SelectKeyword = ({
   const [isKeywordOpen, setIsKeywordOpen] = useState(false);
   const [isDetailOpen, setIsDetailOpen] = useState(false);
 
-  const handleKeywordSelect = (value) => {
-    setSelectedKeyword(value);
+  const handleKeywordSelect = (key) => {
+    setSelectedKeyword(keywordLabels[key]);
     setSelectedDetail('');
     setIsKeywordOpen(false);
   };
@@ -35,14 +35,15 @@ const SelectKeyword = ({
     setIsDetailOpen(false);
   };
 
+  const getKeywordKey = (label) =>
+    Object.keys(keywordLabels).find((key) => keywordLabels[key] === label);
+
   return (
     <>
       <KeywordContainer>
         <label htmlFor="keyword-select">키워드</label>
         <CustomSelect onClick={() => setIsKeywordOpen(!isKeywordOpen)}>
-          <span>
-            {selectedKeyword ? keywordLabels[selectedKeyword] : '키워드 선택'}
-          </span>
+          <span>{selectedKeyword || '키워드 선택'}</span>
           <ArrowIcon />
         </CustomSelect>
         {isKeywordOpen && (
@@ -51,10 +52,7 @@ const SelectKeyword = ({
               .filter((key) => key !== '')
               .map((key, index, array) => (
                 <Fragment key={key}>
-                  <SelectItem
-                    key={key}
-                    onClick={() => handleKeywordSelect(key)}
-                  >
+                  <SelectItem onClick={() => handleKeywordSelect(key)}>
                     {keywordLabels[key]}
                   </SelectItem>
                   {index < array.length - 1 && <div className="divider" />}
@@ -63,6 +61,7 @@ const SelectKeyword = ({
           </SelectList>
         )}
       </KeywordContainer>
+
       <KeywordContainer>
         <label htmlFor="detail-keyword-select">세부 키워드</label>
         <CustomSelect onClick={() => setIsDetailOpen(!isDetailOpen)}>
@@ -71,17 +70,14 @@ const SelectKeyword = ({
         </CustomSelect>
         {isDetailOpen && selectedKeyword && (
           <SelectList>
-            {KEYWORDS.STUDENT_KEYWORDS[selectedKeyword].map(
+            {KEYWORDS.STUDENT_KEYWORDS[getKeywordKey(selectedKeyword)]?.map(
               (option, index, array) => (
-                <>
-                  <SelectItem
-                    key={option.value}
-                    onClick={() => handleDetailSelect(option.label)}
-                  >
+                <Fragment key={option.value}>
+                  <SelectItem onClick={() => handleDetailSelect(option.label)}>
                     {option.label}
                   </SelectItem>
                   {index < array.length - 1 && <div className="divider" />}
-                </>
+                </Fragment>
               ),
             )}
           </SelectList>
