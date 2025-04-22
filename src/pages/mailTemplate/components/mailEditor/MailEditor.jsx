@@ -16,16 +16,17 @@ import FileInput from '@components/common/fileInput/FileInput';
 import SubmitBtn from '@components/common/submitBtn/SubmitBtn';
 import AIPopUp from '@components/common/aiPopUp/AIPopUp';
 
-const MailEditor = ({ templateContent }) => {
+const MailEditor = ({ templateContent, setTemplateContent }) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleSave = () => {
-    // 메일 임시저장 로직 작성 예정
+    // 저장 API 연결 예정
+    console.log('저장할 템플릿:', templateContent);
   };
 
   const handleSend = () => {
     setShowModal(true);
-    // 메일 전송 로직 작성 예정
+    // 전송 API 연결 예정
   };
 
   return (
@@ -51,7 +52,10 @@ const MailEditor = ({ templateContent }) => {
 
         {/* 본문 영역 */}
         <MainArea>
-          <Textarea readOnly value={templateContent} />
+          <Textarea
+            value={templateContent}
+            onChange={(e) => setTemplateContent(e.target.value)}
+          />
         </MainArea>
 
         {/* 하단: 파일 첨부 + 버튼 */}

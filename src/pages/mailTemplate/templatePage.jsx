@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import Sidebar from '@components/common/sidebar/Sidebar';
 import TemplateSidebar from './components/templateSidebar/TemplateSidebar';
 import MailEditor from './components/mailEditor/MailEditor';
-import { fetchTemplate } from '../../apis/templete/fetchTemplete';
+import { fetchTemplate } from '@apis/templete/fetchTemplete';
 
 const TemplatePage = () => {
   const [selectedTarget, setSelectedTarget] = useState('학생');
@@ -51,7 +51,12 @@ const TemplatePage = () => {
           selectedDetail={selectedDetail}
           setSelectedDetail={setSelectedDetail}
         />
-        {isKeywordSelected && <MailEditor templateContent={templateContent} />}
+        {isKeywordSelected && (
+          <MailEditor
+            templateContent={templateContent}
+            setTemplateContent={setTemplateContent}
+          />
+        )}
       </ContentWrapper>
     </PageWrapper>
   );
