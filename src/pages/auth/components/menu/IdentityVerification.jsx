@@ -48,7 +48,9 @@ const IdentityVerification = ({
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
         {isAllFilled && (
-          <NextButton onClick={handleComplete}>본인인증 완료하기</NextButton>
+          <NextButton type="submit" onClick={handleComplete}>
+            본인인증 완료하기
+          </NextButton>
         )}
       </Form>
     </Wrapper>

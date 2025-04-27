@@ -66,7 +66,7 @@ const ProfileSetup = ({ email, password }) => {
         onChange={(e) => setName(e.target.value)}
       />
       {isAllFilled && (
-        <SignUpButton onClick={handleSignUp}>회원가입하기</SignUpButton>
+        <SignUpButton type="submit"  onClick={handleSignUp}>회원가입하기</SignUpButton>
       )}
     </Wrapper>
   );

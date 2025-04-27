@@ -17,7 +17,7 @@ const TermsAgreement = ({ setStep }) => {
           <Content>{term.content}</Content>
         </TextBox>
       ))}
-      <Button onClick={handleAgreeAll}>모두 동의하고 가입 진행하기</Button>
+      <Button type="submit" onClick={handleAgreeAll}>모두 동의하고 가입 진행하기</Button>
     </Wrapper>
   );
 };
