@@ -2,14 +2,23 @@ import { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@styles/theme';
 
-const IdentityVerification = ({ setStep }) => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const IdentityVerification = ({
+  setStep,
+  email,
+  setEmail,
+  password,
+  setPassword,
+}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const isAllFilled = email && password && confirmPassword;
+  const isPasswordMatch = password === confirmPassword;
 
   const handleComplete = () => {
+    if (!isPasswordMatch) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
     setStep('profile');
   };
 
@@ -78,7 +87,7 @@ const Input = styled.input`
   border-radius: 20px;
   font-size: ${theme.font.size.sMedium};
   font-weight: ${theme.font.weight.regular};
-  
+
   ::placeholder {
     color: ${theme.colors.gray};
   }

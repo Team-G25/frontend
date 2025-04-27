@@ -6,16 +6,26 @@ import IdentityVerification from './components/menu/IdentityVerification';
 import ProfileSetup from './components/menu/ProfileSetup';
 
 const SignUpPage = () => {
-  const [step, setStep] = useState('terms'); // 초기 단계: 약관 동의
+  const [step, setStep] = useState('terms');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const renderStepComponent = () => {
     switch (step) {
       case 'terms':
         return <TermsAgreement setStep={setStep} />;
       case 'identity':
-        return <IdentityVerification setStep={setStep} />;
+        return (
+          <IdentityVerification
+            setStep={setStep}
+            email={email}
+            setEmail={setEmail}
+            password={password}
+            setPassword={setPassword}
+          />
+        );
       case 'profile':
-        return <ProfileSetup setStep={setStep} />;
+        return <ProfileSetup email={email} password={password} />;
       default:
         return <TermsAgreement setStep={setStep} />;
     }

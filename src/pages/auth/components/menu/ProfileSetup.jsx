@@ -1,12 +1,16 @@
 import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { signupUser } from '@/apis/auth/authApis';
+
 import styled from 'styled-components';
 import theme from '@styles/theme';
 import DefaultProfileIcon from '@assets/svgs/ic_profile.svg'; // 기본 프로필 아이콘
 
-const ProfileSetup = () => {
+const ProfileSetup = ({ email, password }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState('');
   const fileInputRef = useRef(null);
+  const navigate = useNavigate();
 
   const handleImageClick = () => {
     fileInputRef.current.click();
@@ -22,8 +26,20 @@ const ProfileSetup = () => {
 
   const isAllFilled = profileImage && name;
 
-  const handleSignUp = () => {
-    console.log('회원가입 완료:', { profileImage, name });
+  const handleSignUp = async () => {
+    try {
+      const res = await signupUser({
+        nickname: name,
+        email,
+        password,
+      });
+      console.log('회원가입 성공:', res);
+      alert('회원가입이 완료되었습니다!');
+      navigate('/login'); // 회원가입 완료 후 로그인 페이지로 이동
+    } catch (error) {
+      console.error('회원가입 실패:', error);
+      alert('회원가입에 실패했습니다.');
+    }
   };
 
   return (
