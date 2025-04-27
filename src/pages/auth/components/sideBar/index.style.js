@@ -1,26 +1,24 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from '@styles/theme';
 import MailerLogo from '../../../../assets/svgs/Mailer-logo.svg?react';
 
 export const SidebarContainer = styled.div`
   width: 200px;
   height: 100vh;
-  background-color: ${theme.colors.white};
-  padding: 20px;
+  background-color: ${theme.colors.white1};
+  padding: 24px;
   display: flex;
   flex-direction: column;
-`;
+  justify-content: space-between;
 
-export const Logo = styled.div`
-  display: flex;
-  margin: 27px 77px 46px 10px;
-  width: 93px;
-  cursor: pointer;
-`;
-
-export const LogoImage = styled(MailerLogo)`
-  width: 100%;
-  height: auto;
+  h1 {
+    margin-top: 11px;
+    margin-bottom: 46px;
+    font-family: ${theme.font.family.basic};
+    font-size: ${theme.font.size.large};
+    font-weight: ${theme.font.weight.bold};
+    color: ${theme.colors.black2};
+  }
 `;
 
 export const MenuList = styled.ul`
@@ -41,46 +39,28 @@ export const MenuItem = styled.li`
   align-items: center;
   transition: background-color 0.2s;
 
+  ${({ active }) =>
+    active &&
+    css`
+      color: ${theme.colors.red};
+    `}
+
   &:hover {
     color: ${theme.colors.red};
     background-color: ${theme.colors.pink_hover};
   }
 `;
 
-export const SubMenu = styled.ul`
-  list-style: none;
-  padding-left: 16px;
-  margin: 0;
-  color: ${theme.colors.black2};
-`;
-
-export const LoginSection = styled.div`
+export const Logo = styled.div`
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 16px;
   margin-top: auto;
-  font-size: ${theme.font.size.medium};
-  font-weight: ${theme.font.weight.medium};
-  color: ${theme.colors.black2};
+  margin-bottom: 30px;
   cursor: pointer;
-
-  svg {
-    width: 36px;
-    height: 36px;
-  }
-
-  &:hover {
-    color: ${theme.colors.red};
-    background-color: ${theme.colors.pink_hover};
-  }
 `;
 
-export const ArrowIcon = styled.span`
-  display: flex;
-  align-items: center;
-
-  svg {
-    width: 24px;
-    height: 24px;
-  }
+export const LogoImage = styled(MailerLogo)`
+  width: 93px;
+  height: auto;
 `;
