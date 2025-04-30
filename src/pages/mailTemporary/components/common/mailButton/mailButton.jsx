@@ -1,23 +1,8 @@
-import { useState } from "react";
 import { StyledFrame, StyledGroup, MailDate, MailTitle } from "./index.style";
 
-const MailButton = ({mailTitle, mailDate}) => {
-    const [selected, setSelected] = useState(null);
-
-    const handleClick = (type) => {
-        if (selected === type){
-            setSelected(null);
-        }else{
-        setSelected(type);
-        }
-        console.log("클릭됨")
-    }
-
+const MailButton = ({mailTitle, mailDate, onClick}) => {
     return(
-        <StyledFrame
-            $isSelected={selected === '메일'} 
-            onClick={() => handleClick('메일')}
-        >
+        <StyledFrame onClick={onClick}>
             <StyledGroup>
                 <MailTitle>{mailTitle}</MailTitle>
                 <MailDate>{mailDate}</MailDate>
