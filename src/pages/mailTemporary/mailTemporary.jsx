@@ -6,10 +6,12 @@ import Top from "./components/common/top/Top";
 import Bottom1 from "./components/common/bottom/bottom1";
 import MailButton from "./components/common/mailButton/mailButton";
 import Sidebar from "@/components/common/sideBar/SideBar";
+import MailEditor from "../mailTemplate/components/mailEditor/MailEditor";
 
 const MailTemporary = () => {
     const [drafts, setDrafts] = useState([]); //현재 페이지에서 보일 데이터
-    const [isLoading, setIsLoading] = useState(false);
+    const [editDraft, setEditDraft] = useState(null); //편집중 상태
+    const [isLoading, setIsLoading] = useState(false); 
     
     //전체 메일 갖고오기
     useEffect(() =>{
@@ -40,24 +42,52 @@ const MailTemporary = () => {
         }
     };
 
+    //임시 메일 편집 상태설정
+    const handleEdit = (mail) => {
+        setEditDraft(mail);
+    }
+
+    //임시 메일 편집 상태해제
+    const handleCancelEdit = () => {
+        setEditDraft(null);
+    }
+
     return (
         <PageContainer>
             <Sidebar />
-            <MainContent>               
-                <TopButton onDelete={handleDelete} />
-                <Top />
-                {drafts.length === 0 && !isLoading ? (
-                    <Bottom1 />
+            <MainContent> 
+                {/* 편집중인 메일이 있으면 */}
+                {editDraft ? (
+                    <MailEditor
+                        draft = {editDraft}
+                        onSave = {(updatedMail) => {
+                            setDrafts((prevDrafts) =>
+                                prevDrafts.map((draft) =>    
+                                    draft.id === updatedMail.id ? updatedMail : draft
+                                )
+                            );
+                            setEditDraft(null);
+                        }}
+                        onCancel = {handleCancelEdit}
+                    />            
+                ): (
+                <>
+                    <TopButton onDelete={handleDelete} />
+                    <Top />
+                    {drafts.length === 0 && !isLoading ? (
+                        <Bottom1 />
                     ) : (
                         drafts.map((draft) => (
                             <MailButton
                                 key={draft.id}
                                 mailTitle={draft.content}
                                 mailDate={draft.savedAt}
-                                onClick={() => console.log("메일 상세 보기", draft)}
-                            />
+                                onClick={() => handleEdit(draft)}
+                             />
                         ))
-                    )}
+                    )}        
+                </>            
+            )}
             </MainContent>
         </PageContainer>
     );

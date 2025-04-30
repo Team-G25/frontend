@@ -8,8 +8,6 @@ export const PageContainer = styled.div`
     height: 100vh;
 `;
 
-
-
 //메일 컨테이너(사이드바 합치기 위해 입력구간 분리)
 export const MainContent = styled.div`
     display: flex;
