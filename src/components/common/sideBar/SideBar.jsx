@@ -19,6 +19,17 @@ const Sidebar = () => {
   const [isMailMenuOpen, setIsMailMenuOpen] = useState(false);
   const navigate = useNavigate();
 
+  const handleLoginClick = () => {
+    // localStorage에 isSignedUp 키로 회원가입 여부를 저장했다고 가정
+    const isSignedUp = localStorage.getItem('isSignedUp') === 'true';
+
+    if (isSignedUp) {
+      navigate('/login');
+    } else {
+      navigate('/signup');
+    }
+  };
+
   return (
     <SidebarContainer>
       <Logo onClick={() => navigate('/')}>
@@ -42,7 +53,7 @@ const Sidebar = () => {
         )}
         <MenuItem onClick={() => navigate('/mailTemporary')}>임시보관</MenuItem>
       </MenuList>
-      <LoginSection>
+      <LoginSection onClick={handleLoginClick}>
         <Profile />
         <span>LOGIN</span>
       </LoginSection>

@@ -38,6 +38,7 @@ const theme = {
       medium: '16px',
       large: '20px',
       xLarge: '24px',
+      titleLarge: '40px',
     },
   },
 };
