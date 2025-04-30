@@ -3,7 +3,8 @@ import theme from "@/styles/theme";
 
 export const StyledFrame = styled.div`
     width: 823px;
-    height: 56px;
+    height: 100%;
+    max-height: 56px;
     background-color: ${({ $isSelected}) =>
         $isSelected? theme.colors.gray1 : theme.colors.white1};
     cursor: pointer;

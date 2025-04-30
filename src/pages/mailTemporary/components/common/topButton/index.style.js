@@ -3,7 +3,7 @@ import theme from "@/styles/theme";
 
 export const ButtonContainer = styled.div`
     display: flex;
-    jsutify-content: space-between;
+    justify-content: flex-end;
     width: 825px;
     height: 50px;
 `;
