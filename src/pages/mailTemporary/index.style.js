@@ -17,6 +17,6 @@ export const MainContent = styled.div`
     width: 100%;
     padding: 20px;
 
-    height: 90vh;
+    height: 100vh;
     overflow-y: auto;
 `;
