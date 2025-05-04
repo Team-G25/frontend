@@ -1,8 +1,16 @@
 import { StyledFrame, TitleFrame, DateFrame } from "./index.style";
 
-const MailButton = ({mailTitle, mailDate, onClick}) => {
+const MailButton = ({mailTitle, mailDate, isSelected, onClick, onEdit}) => {
+    const handleClick = () => {
+        onClick();
+
+        if(isSelected && onEdit){
+            onEdit();
+        }
+    };
+
     return(
-        <StyledFrame onClick={onClick}>
+        <StyledFrame $isSelected={isSelected} onClick={handleClick}>
             <TitleFrame>{mailTitle}</TitleFrame>
             <DateFrame>{mailDate}</DateFrame>
         </StyledFrame>

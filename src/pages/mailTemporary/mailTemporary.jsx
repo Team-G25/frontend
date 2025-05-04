@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { fetchDrafts, deleteAllDrafts } from "@/apis/temporary/temporaryDrafts";
+import { fetchDrafts, deleteAllDrafts, deleteDraft } from "@/apis/temporary/temporaryDrafts";
 import { PageContainer, MainContent } from "./index.style";
 import TopButton from "./components/common/topButton/topButton";
 import Top from "./components/common/top/Top";
@@ -14,6 +14,7 @@ const MailTemporary = () => {
     const [editDraft, setEditDraft] = useState(null); //편집중 상태
     const [isLoading, setIsLoading] = useState(false); 
     const [showModal, setShowModal] = useState(false); //삭제 버튼 누를시 모달띄움
+    const [selectedMailID, setSelectedMailID] = useState(null); //메일버튼 누를시 id값을 저장하게됩니다
 
     //전체 메일 갖고오기
     useEffect(() =>{
@@ -33,14 +34,19 @@ const MailTemporary = () => {
         loadAllDrafts();
     }, []);
     
-    //메일 전체 삭제 누를시 모달창 띄우기
+    //메일 선택 핸들러
+    const handleSelectedMail = (mailID) => {
+        setSelectedMailID((prevId) => (prevId === mailID? null : mailID))
+    }
+
+    //삭제 누를시 모달창 띄우기
     const handleDelete = async () =>{
         setShowModal(true);
         console.log("모달창 띄웁니다.")
     };
 
     //메일 전체 삭제
-    const handleConfirmDelete = async (draftID) => {
+    const handleAllDelete = async (draftID) => {
         try {
             await deleteAllDrafts(draftID);
             setDrafts([]);
@@ -50,6 +56,23 @@ const MailTemporary = () => {
         } finally {
             setShowModal(false);
         };
+    };
+
+    //선택한 메일 삭제(단일 삭제) 
+    const handleOneDelete = async () => {
+        if(!selectedMailID) return;
+
+        try{
+            console.log("메일 삭제 시작합니다", selectedMailID);
+            await deleteDraft(selectedMailID);
+            setDrafts((prevDrafts) =>
+                prevDrafts.filter((draft) => draft.id !== selectedMailID)
+            );
+            setSelectedMailID(null);
+            console.log("메일 삭제 완료", selectedMailID);
+        } catch (error) {
+            console.log("메일 삭제 오류", error);
+        }
     };
 
     //임시 메일 편집 상태설정
@@ -98,7 +121,9 @@ const MailTemporary = () => {
                                 key={draft.id}
                                 mailTitle={draft.content}
                                 mailDate={draft.savedAt}
-                                onClick={() => handleEdit(draft)}
+                                isSelected={selectedMailID === draft.id}
+                                onClick={() => handleSelectedMail(draft.id)}
+                                onEdit={() => handleEdit(draft)}
                              />
                         ))
                     )}        
@@ -109,7 +134,13 @@ const MailTemporary = () => {
             {showModal && (
                 <DeleteModal
                     onClose={handleClose}
-                    onConfirm={handleConfirmDelete}
+                    onConfirm={() => {
+                        if (selectedMailID) {
+                            handleOneDelete();
+                        } else {
+                            handleAllDelete();
+                        }
+                    }}
                 />
             )}
             </MainContent>
