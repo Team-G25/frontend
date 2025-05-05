@@ -10,6 +10,49 @@ export const EditorContainer = styled.section`
     gap: 30px;
 `;
 
+export const TopArea = styled.div`
+    display: flex:
+    flex-direction: column;
+    background-color: ${theme.colors.white1};
+    border-radius: 12px;
+    padding: 16px;
+`;
+
+export const InputWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    padding: 15px 0;
+    gap: 10px;
+    border-bottom: 1px solid ${theme.colors.gray3};
+
+    &:last-child {
+        border-bottom: none;
+    }
+`
+
+export const Label = styled.label`
+    font-family: ${theme.font.family.basic};
+    font-weight: ${theme.font.weight.medium};
+    font-size: ${theme.font.size.medium};
+    color: ${theme.colors.black2};
+`;
+
+export const Input = styled.input`
+    flex: 1;
+    font-family: ${theme.font.family.basic};
+    font-weight: ${theme.font.weight.medium};
+    font-size: ${theme.font.size.medium};
+    color: ${theme.colors.black2};
+    border: none;
+    background-color: transparent;
+    outline: none;
+
+    &::placeholder {
+        color: ${theme.colors.gray2};
+    }
+`;
+
+
 export const MainArea = styled.div`
     display: flex;
     flex-direction: column;
@@ -28,6 +71,9 @@ export const Textarea = styled.textarea`
     font-family: ${theme.font.family.basic};
     font-weight: ${theme.font.weight.regular};
     font-size: ${theme.font.size.sMedium};
+    overflow-y: hidden;
+    scroll: none;
+    resize: none;
 `;
 
 export const BottomArea = styled.div`

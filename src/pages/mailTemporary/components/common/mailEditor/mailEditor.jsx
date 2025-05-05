@@ -1,6 +1,10 @@
 import { useState } from "react";
 import {
     EditorContainer,
+    TopArea,
+    InputWrapper,
+    Label,
+    Input,
     MainArea,
     Textarea,
     BottomArea,
@@ -12,13 +16,16 @@ import FileInput from '@components/common/fileInput/FileInput';
 import SubmitBtn from '@components/common/submitBtn/SubmitBtn';
 import { writeDraft } from "@/apis/temporary/writeDraft";
 
-const MailEditor = ({email, draftTitle}) => {
-    const [content, setContent] = useState('');
+const MailEditor = ({draft}) => {
+    const [recipientEmail, setRecipientEmail] = useState('');
+    const [senderEmail, setSenderEmail] = useState('');
+    const [mailTitle, setMailTitle] = useState('');
+    const [content, setContent] = useState(draft.content || '');
     
     const handleSend = async () => {
         try {
             const result = await writeDraft({
-                email,
+                recipientEmail,
                 content
             });
             console.log("메일 전송 성공", result)
@@ -34,9 +41,36 @@ const MailEditor = ({email, draftTitle}) => {
     return (
         <>
           <EditorContainer>
+                <TopArea>
+                    <InputWrapper>
+                        <Label>받는 사람 :</Label>
+                        <Input
+                            placeholder = "수신자 이메일 입력"
+                            value = {recipientEmail}
+                            onChange = {(e) => setRecipientEmail(e.target.value)}
+                        />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <Label>제목 :</Label>
+                        <Input
+                            placeholder = "메일 제목 입력"
+                            value = {mailTitle}
+                            onChange = {(e) => setMailTitle(e.target.value)}
+                        />
+                    </InputWrapper>
+                    <InputWrapper>
+                        <Label>보낸 사람 :</Label>
+                        <Input
+                            placeholder = "발신자 이메일 입력"
+                            value = {senderEmail}
+                            onChange = {(e) => setSenderEmail(e.target.value)}
+                        />
+                    </InputWrapper>
+                </TopArea>
+
                 <MainArea>
                     <Textarea
-                        value={draftTitle}
+                        value={content}
                         onChange={(e) => setContent(e.target.value)}
                     />
                     </MainArea>

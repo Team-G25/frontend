@@ -6,7 +6,7 @@ import Top from "./components/common/top/Top";
 import Bottom1 from "./components/common/bottom/bottom1";
 import MailButton from "./components/common/mailButton/mailButton";
 import Sidebar from "@/components/common/sideBar/SideBar";
-import MailEditor from "../mailTemplate/components/mailEditor/MailEditor";
+import MailEditor from "./components/common/mailEditor/MailEditor";
 import DeleteModal from "./components/common/deletePopuUp/deletePopUp";
 
 const MailTemporary = () => {
@@ -15,6 +15,7 @@ const MailTemporary = () => {
     const [isLoading, setIsLoading] = useState(false); 
     const [showModal, setShowModal] = useState(false); //삭제 버튼 누를시 모달띄움
     const [selectedMailID, setSelectedMailID] = useState(null); //메일버튼 누를시 id값을 저장하게됩니다
+    const [selectedMailContent, setSelectedMailContent] = useState(null); //메일버튼 누를시 id와 함께 내용도 저장하게됩니다                              
 
     //전체 메일 갖고오기
     useEffect(() =>{
@@ -35,8 +36,9 @@ const MailTemporary = () => {
     }, []);
     
     //메일 선택 핸들러
-    const handleSelectedMail = (mailID) => {
+    const handleSelectedMail = (mailID, content) => {
         setSelectedMailID((prevId) => (prevId === mailID? null : mailID))
+        setSelectedMailContent((prevId) => (prevId === mailID? null : content))
     }
 
     //삭제 누를시 모달창 띄우기
@@ -69,6 +71,7 @@ const MailTemporary = () => {
                 prevDrafts.filter((draft) => draft.id !== selectedMailID)
             );
             setSelectedMailID(null);
+            setSelectedMailContent(null);
             console.log("메일 삭제 완료", selectedMailID);
         } catch (error) {
             console.log("메일 삭제 오류", error);
@@ -99,6 +102,7 @@ const MailTemporary = () => {
                 {editDraft ? (
                     <MailEditor
                         draft = {editDraft}
+                        // draftContent = {selectedMailContent}
                         onSave = {(updatedMail) => {
                             setDrafts((prevDrafts) =>
                                 prevDrafts.map((draft) =>    
@@ -122,7 +126,7 @@ const MailTemporary = () => {
                                 mailTitle={draft.content}
                                 mailDate={draft.savedAt}
                                 isSelected={selectedMailID === draft.id}
-                                onClick={() => handleSelectedMail(draft.id)}
+                                onClick={() => handleSelectedMail(draft.id, draft.content)}
                                 onEdit={() => handleEdit(draft)}
                              />
                         ))
