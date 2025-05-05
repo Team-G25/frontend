@@ -13,10 +13,10 @@ import {
   } from './index.style';
   
 import FileInput from '@components/common/fileInput/FileInput';
-import SubmitBtn from '@components/common/submitBtn/SubmitBtn';
+import SubmitCancelBtn from "../submitCancelBtn/submitCancelBtn";
 import { writeDraft } from "@/apis/temporary/writeDraft";
 
-const MailEditor = ({draft}) => {
+const MailEditor = ({draft, onCancel}) => {
     const [recipientEmail, setRecipientEmail] = useState('');
     const [senderEmail, setSenderEmail] = useState('');
     const [mailTitle, setMailTitle] = useState('');
@@ -34,8 +34,9 @@ const MailEditor = ({draft}) => {
         }
     };
 
-    const handleSave = () => {
-        console.log("메일 저장하기 눌렀습니다. 여기선 저장 X");
+    const handleCancelEdit = () => {
+        console.log("메일 취소하기 눌렀습니다. 여기선 저장 X");
+        onCancel();
     };
 
     return (
@@ -80,7 +81,7 @@ const MailEditor = ({draft}) => {
                         <FileInput width="930px" />
                     </BottomLeft>
                         <BottomRight>
-                        <SubmitBtn onSave={handleSave} onSend={handleSend} />
+                        <SubmitCancelBtn onCancel={handleCancelEdit} onSend={handleSend} />
                     </BottomRight>
                 </BottomArea>
             </EditorContainer>
