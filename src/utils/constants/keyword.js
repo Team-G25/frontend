@@ -2,19 +2,19 @@ export const STUDENT_KEYWORDS = {
   '': [],
   grade: [
     { value: 'grade-correction', label: '성적 정정' },
-    { value: 'grade-inquiry', label: '성적 문의' },
+    { value: 'grade-inquiry', label: '성적 확인' },
   ],
   attendance: [
-    { value: 'attendance-confirmation', label: '출석 확인' },
+    { value: 'attendance-confirmation', label: '출석확인' },
     { value: 'attendance-late', label: '지각' },
     { value: 'attendance-absence', label: '결석' },
   ],
   assignment: [
     { value: 'assignment-confirmation-of-submission', label: '제출 확인' },
-    { value: 'assignment-Inquiry', label: '과제 문의' },
+    { value: 'assignment-Inquiry', label: '과제' },
   ],
   class: [
-    { value: 'class-Inquiry', label: '수강 문의' },
+    { value: 'class-Inquiry', label: '수강' },
     { value: 'class-additional', label: '추가 수강' },
   ],
 };
