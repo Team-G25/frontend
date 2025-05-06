@@ -14,28 +14,33 @@ import {
   
 import FileInput from '@components/common/fileInput/FileInput';
 import SubmitCancelBtn from "../submitCancelBtn/submitCancelBtn";
-import { writeDraft } from "@/apis/temporary/writeDraft";
+import { sendMail } from "@/apis/mailWrite/sendMail";
 
 const MailEditor = ({draft, onCancel}) => {
     const [recipientEmail, setRecipientEmail] = useState('');
-    const [senderEmail, setSenderEmail] = useState('');
+    const [senderEmail, setSenderEmail] = useState('0000@mailergo.io.kr'); 
+    //테스트를 위해 초기값 고정세팅 추후 퍼블리싱할때는 제거.
     const [mailTitle, setMailTitle] = useState('');
     const [content, setContent] = useState(draft.content || '');
-    
+    const [file, setFile] = useState([]); //첨부파일
+
     const handleSend = async () => {
         try {
-            const result = await writeDraft({
-                recipientEmail,
-                content
+            const result = await sendMail({
+                to: recipientEmail,
+                subject: mailTitle,
+                content,
+                from: senderEmail,
+                attachments: file,
             });
+
             console.log("메일 전송 성공", result)
         } catch (error) {
-            console.error('메일 전송 실패:', error)
+            console.error('메일 전송 실패:', error.response?.data || error.message)
         }
     };
 
     const handleCancelEdit = () => {
-        console.log("메일 취소하기 눌렀습니다. 여기선 저장 X");
         onCancel();
     };
 
@@ -64,7 +69,8 @@ const MailEditor = ({draft, onCancel}) => {
                         <Input
                             placeholder = "발신자 이메일 입력"
                             value = {senderEmail}
-                            onChange = {(e) => setSenderEmail(e.target.value)}
+                            // onChange = {(e) => setSenderEmail(e.target.value)}
+                            readOnly // 퍼블리싱할때 제거
                         />
                     </InputWrapper>
                 </TopArea>

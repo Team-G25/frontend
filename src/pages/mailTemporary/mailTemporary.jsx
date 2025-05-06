@@ -102,15 +102,14 @@ const MailTemporary = () => {
                 {editDraft ? (
                     <MailEditor
                         draft = {editDraft}
-                        // draftContent = {selectedMailContent}
-                        onSave = {(updatedMail) => {
-                            setDrafts((prevDrafts) =>
-                                prevDrafts.map((draft) =>    
-                                    draft.id === updatedMail.id ? updatedMail : draft
-                                )
-                            );
-                            setEditDraft(null);
-                        }}
+                        // onSave = {(updatedMail) => {
+                        //     setDrafts((prevDrafts) =>
+                        //         prevDrafts.map((draft) =>    
+                        //             draft.id === updatedMail.id ? updatedMail : draft
+                        //         )
+                        //     );
+                        //     setEditDraft(null);
+                        // }}
                         onCancel = {handleCancelEdit}
                     />            
                 ): (
