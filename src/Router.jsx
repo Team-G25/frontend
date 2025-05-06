@@ -1,5 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Home from '@pages/home';
+import SignUp from '@pages/auth/signup';
+import Login from '@pages/auth/login';
 import Test from '@pages/test';
 import MailTemplate from '@/pages/mailTemplate/templatePage';
 import MailAI from '@pages/mailAI/mailAI';
@@ -11,6 +13,8 @@ const AppRouter = () => {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/test" element={<Test />} />
         <Route path="/mailTemplate" element={<MailTemplate />} />
         <Route path="/mailAI" element={<MailAI />} />

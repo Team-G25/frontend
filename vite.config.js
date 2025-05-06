@@ -29,5 +29,6 @@ export default defineConfig({
     fs: {
       strict: false,
     },
+    open: true,
   },
 });
