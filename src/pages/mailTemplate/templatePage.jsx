@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import Sidebar from '@components/common/sidebar/Sidebar';
 import TemplateSidebar from './components/templateSidebar/TemplateSidebar';
 import MailEditor from './components/mailEditor/MailEditor';
+
 import { fetchTemplate } from '@apis/templete/fetchTemplete';
 
 const TemplatePage = () => {
