@@ -8,7 +8,7 @@ import {
   FileName,
 } from './index.style';
 
-const FileInput = ({ width }) => {
+const FileInput = ({ width, onFileSelect }) => {
   const fileInputRef = useRef(null);
   const [fileName, setFileName] = useState('');
 
@@ -21,6 +21,7 @@ const FileInput = ({ width }) => {
     if (files && files.length > 0) {
       const selectedFile = files[0];
       setFileName(selectedFile.name);
+      onFileSelect([selectedFile]);
     }
   };
 
