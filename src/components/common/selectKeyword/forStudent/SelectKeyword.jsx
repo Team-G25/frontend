@@ -9,10 +9,10 @@ import KEYWORDS from '@utils/constants/keyword';
 import ArrowIcon from '@svgs/Polygon-down.svg?react';
 
 const keywordLabels = {
-  grade: '성적',
-  attendance: '출석',
-  assignment: '과제',
-  class: '수강',
+  grade: '성적문의',
+  attendance: '출결문의',
+  assignment: '과제문의',
+  class: '수강문의',
 };
 
 const SelectKeyword = ({

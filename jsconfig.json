@@ -5,6 +5,7 @@
       "@/*": ["*"],
       "@svgs/*": ["assets/svgs/*.svg"],
       "@images/*": ["assets/images/*.png"],
+      "@apis/*": ["apis/*"],
       "@components/*": ["components/*"],
       "@pages/*": ["pages/*"],
       "@utils/*": ["utils/*"],
