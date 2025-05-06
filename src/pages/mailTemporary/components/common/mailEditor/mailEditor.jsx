@@ -1,4 +1,5 @@
 import { useState } from "react";
+import styled from "styled-components";
 import {
     EditorContainer,
     TopArea,
@@ -15,6 +16,7 @@ import {
 import FileInput from '@components/common/fileInput/FileInput';
 import SubmitCancelBtn from "../submitCancelBtn/submitCancelBtn";
 import { sendMail } from "@/apis/mailWrite/sendMail";
+import SubmitAlert from "@/components/common/submitAlert/SubmitAlert";
 
 const MailEditor = ({draft, onCancel}) => {
     const [recipientEmail, setRecipientEmail] = useState('');
@@ -23,6 +25,7 @@ const MailEditor = ({draft, onCancel}) => {
     const [mailTitle, setMailTitle] = useState('');
     const [content, setContent] = useState(draft.content || '');
     const [file, setFile] = useState([]); //첨부파일
+    const [isMailSent, setIsMailSent] = useState(false); //메일 성공 알림띄우는 상태
 
     const handleSend = async () => {
         try {
@@ -34,7 +37,8 @@ const MailEditor = ({draft, onCancel}) => {
                 attachments: file,
             });
 
-            console.log("메일 전송 성공", result)
+            console.log("메일 전송 성공", result);
+            setIsMailSent(true);
         } catch (error) {
             console.error('메일 전송 실패:', error.response?.data || error.message)
         }
@@ -43,6 +47,14 @@ const MailEditor = ({draft, onCancel}) => {
     const handleCancelEdit = () => {
         onCancel();
     };
+
+    if(isMailSent){
+        return (
+            <SuccessWrapper>
+                <SubmitAlert />
+            </SuccessWrapper>
+        );
+    }
 
     return (
         <>
@@ -96,3 +108,10 @@ const MailEditor = ({draft, onCancel}) => {
 };
 
 export default MailEditor;
+
+const SuccessWrapper = styled.div`
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+`;
