@@ -6,22 +6,18 @@ import {
   Overlay,
 } from './index.style';
 
-const Modal = ({ onClose }) => {
-  const handleButtonClick = () => {
-    onClose();
-  };
-
+const AIPopUp = ({ onClose, onSend, onFeedback }) => {
   return (
-    <Overlay>
-      <ModalContainer>
+    <Overlay onClick={onClose}>
+      <ModalContainer onClick={(e) => e.stopPropagation()}>
         <Title>AI 피드백을 받으시겠어요?</Title>
         <ButtonContainer>
-          <Button onClick={handleButtonClick}>메일 전송하기</Button>
-          <Button onClick={handleButtonClick}>피드백 받기</Button>
+          <Button onClick={onSend}>메일 전송하기</Button>
+          <Button onClick={onFeedback}>피드백 받기</Button>
         </ButtonContainer>
       </ModalContainer>
     </Overlay>
   );
 };
 
-export default Modal;
+export default AIPopUp;
