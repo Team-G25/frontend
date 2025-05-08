@@ -12,10 +12,10 @@ export const StyledFrame = styled.div`
     flex-shrink: none;
     overflow: hidden;
     align-items: center;
-    border-radius: 8px;
     box-sizing: border-box;
     transition: background-color 0.2s ease;
     align-items: center;
+    border-bottom: 1px solid ${theme.colors.gray1};
 `;
 
 export const TitleFrame = styled.div`

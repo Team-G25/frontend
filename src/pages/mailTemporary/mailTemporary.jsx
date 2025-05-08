@@ -91,6 +91,7 @@ const MailTemporary = () => {
         console.log("모달 닫습니다.");
     } 
 
+    //메일 보내지면 클릭했던 버튼 사라집니다.
     const handleMailSent = (sentDraftID) => {
         handleOneDelete(sentDraftID);
     }
@@ -111,7 +112,7 @@ const MailTemporary = () => {
                     <TopButton onDelete={handleDelete} />
                     <Top />
                     {drafts.length === 0 && !isLoading ? (
-                        <Bottom1 />
+                        <Bottom1 /> //서버에 보관한 메일이없으면 요 컴포넌트가 뜹니다.
                     ) : (
                         drafts.map((draft) => (
                             <MailButton
