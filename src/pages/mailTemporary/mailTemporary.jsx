@@ -14,8 +14,7 @@ const MailTemporary = () => {
     const [editDraft, setEditDraft] = useState(null); //편집중 상태
     const [isLoading, setIsLoading] = useState(false); 
     const [showModal, setShowModal] = useState(false); //삭제 버튼 누를시 모달띄움
-    const [selectedMailID, setSelectedMailID] = useState(null); //메일버튼 누를시 id값을 저장하게됩니다
-    const [selectedMailContent, setSelectedMailContent] = useState(null); //메일버튼 누를시 id와 함께 내용도 저장하게됩니다                              
+    const [selectedMailID, setSelectedMailID] = useState(null); //메일버튼 누를시 id값을 저장하게됩니다                              
 
     //전체 메일 갖고오기
     useEffect(() =>{
@@ -36,9 +35,8 @@ const MailTemporary = () => {
     }, []);
     
     //메일 선택 핸들러
-    const handleSelectedMail = (mailID, content) => {
+    const handleSelectedMail = (mailID) => {
         setSelectedMailID((prevId) => (prevId === mailID? null : mailID))
-        setSelectedMailContent((prevId) => (prevId === mailID? null : content))
     }
 
     //삭제 누를시 모달창 띄우기
@@ -61,18 +59,17 @@ const MailTemporary = () => {
     };
 
     //선택한 메일 삭제(단일 삭제) 
-    const handleOneDelete = async () => {
-        if(!selectedMailID) return;
+    const handleOneDelete = async (draftID) => {
+        if(!draftID) return;
 
         try{
-            console.log("메일 삭제 시작합니다", selectedMailID);
-            await deleteDraft(selectedMailID);
+            console.log("메일 삭제 시작합니다", draftID);
+            await deleteDraft(draftID);
             setDrafts((prevDrafts) =>
-                prevDrafts.filter((draft) => draft.id !== selectedMailID)
+                prevDrafts.filter((draft) => draft.id !== draftID)
             );
             setSelectedMailID(null);
-            setSelectedMailContent(null);
-            console.log("메일 삭제 완료", selectedMailID);
+            console.log("메일 삭제 완료", draftID);
         } catch (error) {
             console.log("메일 삭제 오류", error);
         }
@@ -94,6 +91,10 @@ const MailTemporary = () => {
         console.log("모달 닫습니다.");
     } 
 
+    const handleMailSent = (sentDraftID) => {
+        handleOneDelete(sentDraftID);
+    }
+
     return (
         <PageContainer>
             <Sidebar />
@@ -103,6 +104,7 @@ const MailTemporary = () => {
                     <MailEditor
                         draft = {editDraft}
                         onCancel = {handleCancelEdit}
+                        onMailSent = {handleMailSent}
                     />            
                 ): (
                 <>
@@ -117,7 +119,7 @@ const MailTemporary = () => {
                                 mailTitle={draft.content}
                                 mailDate={draft.savedAt}
                                 isSelected={selectedMailID === draft.id}
-                                onClick={() => handleSelectedMail(draft.id, draft.content)}
+                                onClick={() => handleSelectedMail(draft.id)}
                                 onEdit={() => handleEdit(draft)}
                              />
                         ))
@@ -131,7 +133,7 @@ const MailTemporary = () => {
                     onClose={handleClose}
                     onConfirm={() => {
                         if (selectedMailID) {
-                            handleOneDelete();
+                            handleOneDelete(selectedMailID);
                         } else {
                             handleAllDelete();
                         }
