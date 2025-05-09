@@ -7,7 +7,7 @@ import {
   LogoImage,
 } from './index.style';
 
-const Sidebar = ({ step, setStep }) => {
+const SideBar = ({ step, setStep }) => {
   const navigate = useNavigate();
 
   return (
@@ -37,4 +37,4 @@ const Sidebar = ({ step, setStep }) => {
   );
 };
 
-export default Sidebar;
+export default SideBar;
