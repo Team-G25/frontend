@@ -52,16 +52,35 @@ export const Input = styled.input`
   }
 `;
 
+export const Separator = styled.hr`
+  border: none;
+  height: 2px;
+  background-color: ${theme.colors.gray3};
+  margin: 8px 0 16px;
+`;
+
 export const MainArea = styled.div`
+  flex: 1;
+  display: flex;
+  gap: 16px;
+  background-color: ${theme.colors.white};
+  overflow: hidden;
+`;
+
+export const ContentBox = styled.div`
+  flex: 1;
   display: flex;
   flex-direction: column;
   background-color: ${theme.colors.white1};
   border-radius: 12px;
+  padding: 24px;
+  overflow: hidden;
 `;
 
 export const Textarea = styled.textarea`
+  flex: 1;
   width: 100%;
-  height: 580px;
+  resize: none;
   border: none;
   border-radius: 12px;
   background-color: ${theme.colors.white1};
@@ -70,6 +89,13 @@ export const Textarea = styled.textarea`
   font-family: ${theme.font.family.basic};
   font-weight: ${theme.font.weight.regular};
   font-size: ${theme.font.size.sMedium};
+  overflow-y: auto;
+`;
+
+export const Note = styled.p`
+  font-size: 12px;
+  color: ${theme.colors.gray2};
+  margin-top: 8px;
 `;
 
 export const BottomArea = styled.div`

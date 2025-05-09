@@ -11,35 +11,29 @@ import {
   BottomLeft,
   BottomRight,
   ContentBox,
-  Separator,
   Note,
+  Separator,
 } from './index.style';
 
 import FileInput from '@/components/common/fileInput/FileInputForm';
 import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
 import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
 
-import { postRefineMail } from '@apis/aiMail/postRefineMail';
-import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
+import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { postMail } from '@apis/postMail';
+import { postAIFeedback } from '@apis/templete/postAIFeedback';
 import { getProfile } from '@apis/member/getProfile';
+import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
 
-const MailEditor = ({ aiContent }) => {
+const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showModal, setShowModal] = useState(false);
-  const [refinedContent, setRefinedContent] = useState('');
   const [receiver, setReceiver] = useState('');
   const [subject, setSubject] = useState('');
   const [sender, setSender] = useState('');
-  const [content, setContent] = useState(aiContent);
   const [attachments, setAttachments] = useState([]);
+  const [aiFeedback, setAIFeedback] = useState('');
 
-  const handleSave = () => {
-    // 메일 임시저장 로직 예정
-  };
-
-  useEffect(() => {
-    setContent(aiContent);
-  }, [aiContent]);
+  const userId = 1;
 
   useEffect(() => {
     const fetchSender = async () => {
@@ -53,18 +47,43 @@ const MailEditor = ({ aiContent }) => {
     fetchSender();
   }, []);
 
-  const handleSend = () => {
-    setShowModal(true);
+  const handleSave = async () => {
+    try {
+      await postCustomizeTemplate({
+        templateId,
+        customTitle: subject,
+        customContent: templateContent,
+        userId,
+      });
+      setShowModal(true);
+    } catch {
+      alert('저장 실패');
+    }
+  };
+
+  const handleSendMail = async () => {
+    try {
+      await postMail({
+        to: receiver,
+        subject,
+        content: templateContent,
+        from: sender,
+        attachments,
+      });
+      alert('메일 전송 완료!');
+      setShowModal(false);
+    } catch {
+      alert('메일 전송 실패');
+    }
   };
 
   const handleAIFeedback = async () => {
     setShowModal(false);
     try {
-      const { refined } = await postRefineMail(aiContent);
-      setRefinedContent(refined);
-    } catch (err) {
-      alert('AI 피드백 요청 실패');
-      console.error(err);
+      const { refinedContent } = await postAIFeedback(templateContent);
+      setAIFeedback(refinedContent);
+    } catch {
+      alert('AI 피드백 실패');
     }
   };
 
@@ -80,7 +99,6 @@ const MailEditor = ({ aiContent }) => {
               onChange={(e) => setReceiver(e.target.value)}
             />
           </InputWrapper>
-
           <InputWrapper>
             <Label>제목 :</Label>
             <Input
@@ -89,35 +107,30 @@ const MailEditor = ({ aiContent }) => {
               onChange={(e) => setSubject(e.target.value)}
             />
           </InputWrapper>
-
           <InputWrapper>
             <Label>보낸 사람 :</Label>
-            <Input
-              placeholder="발신자 이메일 입력"
-              value={sender}
-              onChange={(e) => setSender(e.target.value)}
-            />
+            <Input placeholder="발신자 이메일" value={sender} readOnly />
           </InputWrapper>
         </TopArea>
 
         <MainArea>
           <ContentBox>
-            <Label>생성된 본문</Label>
+            <Label>본문</Label>
             <Separator />
             <Textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
+              value={templateContent}
+              onChange={(e) => setTemplateContent(e.target.value)}
             />
           </ContentBox>
 
-          {refinedContent && (
+          {aiFeedback && (
             <ContentBox>
               <Label>AI 피드백</Label>
               <Separator />
               <Textarea
                 as="div"
                 dangerouslySetInnerHTML={{
-                  __html: getHighlightedDiffHTML(aiContent, refinedContent),
+                  __html: getHighlightedDiffHTML(templateContent, aiFeedback),
                 }}
                 style={{
                   paddingLeft: '8px',
@@ -146,7 +159,7 @@ const MailEditor = ({ aiContent }) => {
             <FileInput width="930px" onFileSelect={setAttachments} />
           </BottomLeft>
           <BottomRight>
-            <SubmitBtn onSave={handleSave} onSend={handleSend} />
+            <SubmitBtn onSave={handleSave} onSend={handleSave} />
           </BottomRight>
         </BottomArea>
       </EditorContainer>
@@ -154,7 +167,7 @@ const MailEditor = ({ aiContent }) => {
       {showModal && (
         <AIPopUp
           onClose={() => setShowModal(false)}
-          onSend={() => alert('전송 로직 미구현')}
+          onSend={handleSendMail}
           onFeedback={handleAIFeedback}
         />
       )}
