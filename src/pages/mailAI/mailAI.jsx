@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import AIGenerationInput from './components/generationInput/AIGenerationInput';
 import MailEditor from './components/mailEditor/MailEditor';
-import Sidebar from '@components/common/sidebar/Sidebar';
+// import Sidebar from '@components/common/sidebar/Sidebar';
 import { postGenerateMail } from '@apis/aiMail/postGenerateMail';
 import styled from 'styled-components';
 
@@ -20,7 +20,7 @@ const MailAIPage = () => {
 
   return (
     <PageWrapper>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <ContentWrapper>
         <AIGenerationInput onSubmit={handlePromptSubmit} />
         {aiContent !== '' && <MailEditor aiContent={aiContent} />}

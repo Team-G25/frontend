@@ -13,7 +13,7 @@ import CreateBtn from '@/components/common/createBtn/CreateBtn';
 import SubmitBtn from '@/components/common/submitBtn/SubmitBtn';
 import SubmitAlert from '@/components/common/submitAlert/SubmitAlert';
 import FileInput from '@/components/common/fileInput/FileInput';
-import Sidebar from '@/components/common/sideBar/SideBar';
+// import Sidebar from '@/components/common/sideBar/SideBar';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const Index = () => {
       <ComponentSection>
         <SubTitle>사이드바 </SubTitle>
         <Spacing />
-        <Sidebar />
+        {/* <Sidebar /> */}
       </ComponentSection>
 
       <ComponentSection>

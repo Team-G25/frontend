@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import Sidebar from '@components/common/sidebar/Sidebar';
+// import Sidebar from '@components/common/sidebar/Sidebar.jsx';
 import TemplateSidebar from './components/templateSidebar/TemplateSidebar';
 import MailEditor from './components/mailEditor/MailEditor';
 
@@ -68,7 +68,7 @@ const TemplatePage = () => {
 
   return (
     <PageWrapper>
-      <Sidebar />
+      {/* <Sidebar /> */}
       <ContentWrapper>
         <TemplateSidebar
           selectedTarget={selectedTarget}
