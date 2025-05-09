@@ -16,7 +16,7 @@ import {
     BottomRight,
   } from './index.style';
   
-import SubmitCancelBtn from "../submitCancelBtn/submitCancelBtn";
+import SubmitCancelBtn from "../submitCancelButton/submitCancelBtn";
 
 import { postMail } from "@/apis/postMail";
 import { postAIFeedback } from "@/apis/templete/postAIFeedback";
