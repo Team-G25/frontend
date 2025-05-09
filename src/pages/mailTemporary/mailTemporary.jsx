@@ -5,9 +5,9 @@ import TopButton from "./components/common/topButton/topButton";
 import Top from "./components/common/top/Top";
 import Bottom1 from "./components/common/bottom/bottom1";
 import MailButton from "./components/common/mailButton/mailButton";
-import Sidebar from "@/components/common/sideBar/SideBar";
 import MailEditor from "./components/common/mailEditor/MailEditor";
 import DeleteModal from "./components/common/deletePopuUp/deletePopUp";
+import Sidebar from "@/components/common/sideBar/SideBarComponent";
 
 const MailTemporary = () => {
     const [drafts, setDrafts] = useState([]); //현재 페이지에서 보일 데이터

@@ -16,15 +16,15 @@ import {
     BottomRight,
   } from './index.style';
   
-import FileInput from '@components/common/fileInput/FileInput';
 import SubmitCancelBtn from "../submitCancelBtn/submitCancelBtn";
-import AIPopUp from "@/components/common/aiPopUp/AIPopUP";
-import SubmitAlert from "@/components/common/submitAlert/SubmitAlert";
 
 import { postMail } from "@/apis/postMail";
 import { postAIFeedback } from "@/apis/templete/postAIFeedback";
 import { getProfile } from "@/apis/member/getProfile";
 import { getHighlightedDiffHTML } from "@/utils/highlightDiff";
+import FileInput from "@/components/common/fileInput/FileInputForm";
+import AIPopUp from "@/components/common/aiPopUp/AIPopUpModal";
+import SubmitAlert from "@/components/common/submitAlert/SubmitAlertModal";
 
 const MailEditor = ({draft, onCancel, onMailSent}) => {
     const [showModal, setShowModal] = useState(false);
