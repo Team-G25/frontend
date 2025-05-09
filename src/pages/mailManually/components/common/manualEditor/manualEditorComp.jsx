@@ -17,6 +17,7 @@ import {
  } from "./index.style";
 
 import { postMail } from "@/apis/postMail";
+import { saveMail } from "@/apis/saveMail";
 import { postAIFeedback } from "@/apis/templete/postAIFeedback";
 import { getProfile } from "@/apis/member/getProfile";
 import { getHighlightedDiffHTML } from "@/utils/highlightDiff";
@@ -63,8 +64,14 @@ const MailEditor = () => {
         setShowModal(true);
     };
 
-    const handleSave = () => {
-        console.log("임시저장 눌렀습니다.");
+    const handleSave = async () => {
+        try {
+            console.log("보낼 내용:", content, "보낸 사람:", senderEmail);
+            await saveMail(senderEmail, content);
+            alert('임시 메일 저장 성공!');
+        } catch(error) {
+            console.log('메일 저장 실패',error);
+        }
     };
 
     const handleSend = async () => {
