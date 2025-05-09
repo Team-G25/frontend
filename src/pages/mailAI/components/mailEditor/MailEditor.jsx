@@ -15,9 +15,9 @@ import {
   Note,
 } from './index.style';
 
-import FileInput from '@components/common/fileInput/FileInput';
-import SubmitBtn from '@components/common/submitBtn/SubmitBtn';
-import AIPopUp from '@components/common/aiPopUp/AIPopUp';
+import FileInput from '@/components/common/fileInput/FileInputForm';
+import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
+import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
 
 import { postRefineMail } from '@apis/aiMail/postRefineMail';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';

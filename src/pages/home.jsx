@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-// import Sidebar from '@components/common/sideBar/SideBar';
+import Sidebar from '@/components/common/sideBar/SideBarComponent';
 
 import MainImage1 from '../assets/images/main-image1.svg?react';
 import MainImage2 from '../assets/images/main-image2.svg?react';
@@ -22,7 +22,7 @@ const Home = () => {
 
   return (
     <Container>
-      {/* <Sidebar /> */}
+      <Sidebar />
       <MainContent>
         <ImageWrapper>
           <RandomImage />

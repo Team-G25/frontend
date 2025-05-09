@@ -15,9 +15,9 @@ import {
   Separator,
 } from './index.style';
 
-import FileInput from '@components/common/fileInput/FileInput';
-import SubmitBtn from '@components/common/submitBtn/SubmitBtn';
-import AIPopUp from '@components/common/aiPopUp/AIPopUp';
+import FileInput from '@/components/common/fileInput/FileInputForm';
+import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
+import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
 
 import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { postMail } from '@apis/postMail';

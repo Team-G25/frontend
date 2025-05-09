@@ -1,6 +1,6 @@
 import TargetBtn from '@components/common/targetButton/TargetBtn';
-import SelectKeywordStudent from '@components/common/selectKeyword/forStudent/SelectKeyword';
-import SelectKeywordWorker from '@components/common/selectKeyword/forWorker/SelectKeyword';
+import SelectKeywordStudent from '@/components/common/select/forStudent/SelectKeyword';
+import SelectKeywordWorker from '@/components/common/select/forWorker/SelectKeyword';
 
 import {
   SidebarContainer,

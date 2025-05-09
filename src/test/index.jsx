@@ -3,17 +3,17 @@ import { useState } from 'react';
 import { ComponentSection, Spacing, SubTitle } from './index.style';
 import TargetBtn from '@components/common/targetButton/TargetBtn';
 
-import StudentSelectKeyword from '@components/common/selectKeyword/forStudent/SelectKeyword';
-import WorkerSelectKeyword from '@components/common/selectKeyword/forWorker/SelectKeyword';
+import StudentSelectKeyword from '@/components/common/select/forStudent/SelectKeyword';
+import WorkerSelectKeyword from '@/components/common/select/forWorker/SelectKeyword';
 
 import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
-import Modal from '@components/common/aiPopUp/AIPopUP';
+import Modal from '@/components/common/aiPopUp/AIPopUpModal';
 
-import CreateBtn from '@/components/common/createBtn/CreateBtn';
-import SubmitBtn from '@/components/common/submitBtn/SubmitBtn';
-import SubmitAlert from '@/components/common/submitAlert/SubmitAlert';
-import FileInput from '@/components/common/fileInput/FileInput';
-// import Sidebar from '@/components/common/sideBar/SideBar';
+import CreateBtn from '@/components/common/createButton/CreateBtn';
+import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
+import SubmitAlert from '@/components/common/submitAlert/SubmitAlertModal';
+import FileInput from '@/components/common/fileInput/FileInputForm';
+import Sidebar from '@/components/common/sideBar/SideBarComponent';
 
 const Index = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,7 +29,7 @@ const Index = () => {
       <ComponentSection>
         <SubTitle>사이드바 </SubTitle>
         <Spacing />
-        {/* <Sidebar /> */}
+        <Sidebar />
       </ComponentSection>
 
       <ComponentSection>
