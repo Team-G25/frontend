@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
-import Sidebar from '@components/common/sidebar/Sidebar';
-import TemplateSidebar from './components/templateSidebar/TemplateSidebar';
-import MailEditor from './components/mailEditor/MailEditor';
+import Sidebar from '@/components/common/sideBar/SideBarComponent.jsx';
+import TemplateSidebar from './components/sidebar/TemplateSidebar';
+import MailEditor from './components/mailEditor/MailEditorComponent';
 
 import { fetchTemplate } from '@apis/templete/fetchTemplete';
 
