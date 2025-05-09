@@ -147,7 +147,8 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
                 부분,
                 <del style={{ color: 'gray' }}>회색 취소선</del>은 삭제된 부분을
                 의미합니다.
-                <br />* 보내기 버튼을 누르면 AI 피드백으로 전송됩니다.
+                <br />* 보내기 버튼을 통해 메일 전송 혹은 재피드백 요청이
+                가능합니다.
               </Note>
             </ContentBox>
           )}
