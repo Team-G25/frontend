@@ -8,6 +8,7 @@ export const EditorContainer = styled.section`
     padding: 24px;
     background-color: ${theme.colors.white};
     gap: 30px;
+    border-left: 2px solid ${theme.colors.gray1};
 `;
 
 export const TopArea = styled.div`

@@ -1,5 +1,6 @@
 //임시보관함 페이지 레이아웃 전반을 다루는 페이지입니다.
 import styled from "styled-components";
+import theme from "@/styles/theme";
 
 //페이지 배경
 export const PageContainer = styled.div`
@@ -19,4 +20,6 @@ export const MainContent = styled.div`
 
     height: 100vh;
     overflow-y: auto;
+
+    border-left: 2px solid ${theme.colors.gray1};
 `;
