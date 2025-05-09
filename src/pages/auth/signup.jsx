@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TermsAgreement from './components/menu/TermsAgreement';
 import IdentityVerification from './components/menu/IdentityVerification';
 import ProfileSetup from './components/menu/ProfileSetup';
-import Sidebar from './components/sidebar/SideBar';
+import Sidebar from './components/sidebar/Sidebar.jsx';
 
 const SignUpPage = () => {
   const [step, setStep] = useState('terms');
