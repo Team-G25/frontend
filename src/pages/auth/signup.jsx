@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import Sidebar from './components/sideBar/Sidebar';
 import TermsAgreement from './components/menu/TermsAgreement';
 import IdentityVerification from './components/menu/IdentityVerification';
 import ProfileSetup from './components/menu/ProfileSetup';
+import LoginSidebar from './components/sidebar/LoginSidebar';
 
 const SignUpPage = () => {
   const [step, setStep] = useState('terms');
@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
   return (
     <PageWrapper>
-      <Sidebar step={step} setStep={setStep} />
+      <LoginSidebar step={step} setStep={setStep} />
       <ContentWrapper>{renderStepComponent()}</ContentWrapper>
     </PageWrapper>
   );

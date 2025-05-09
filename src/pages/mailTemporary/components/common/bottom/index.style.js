@@ -6,7 +6,7 @@ export const BottomContainer = styled.div`
     align-items:center;
     justify-content: center;
 
-    width: 825px;
+    width: 1200px;
     height: 668px;
     position: relative;
 

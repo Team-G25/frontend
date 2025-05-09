@@ -5,15 +5,15 @@ export const TopContainer = styled.div`
     display: flex;
     justify-content: left;
     position: relative
-    height: 27px;
-    width: 825px;
+    height: 30px;
+    width: 1200px;
     user-select: none; 
 `;
 
 export const TitleFrame = styled.div`
     left: 0;
     top: 0;
-    width: 692px;
+    width: 900px;
     postion: absolute;
     background-color: ${theme.colors.pink_hover};
 
@@ -25,7 +25,7 @@ export const TitleFrame = styled.div`
 export const DateFrame = styled.div`
     left: 0;
     top: 0;
-    width: 133px;
+    width: 300px;
     background-color: ${theme.colors.red};
 
     font-family: ${theme.font.basic};
