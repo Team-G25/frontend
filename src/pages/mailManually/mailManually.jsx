@@ -4,7 +4,7 @@ import InputInfo from "./components/common/inputInfo/InputInfo";
 import MailWrite from "./components/common/mailWrite/MailWrite";
 import FileInput from "@/components/common/fileInput/FileInput";
 import SubmitBtn from "@/components/common/submitBtn/SubmitBtn";
-import Sidebar from "@/components/common/sideBar/SideBar";
+// import Sidebar from "@/components/common/sideBar/SideBar";
 import Modal from '@components/common/aiPopUp/AIPopUP';
 
 const MailManually = () => {
@@ -45,7 +45,7 @@ const MailManually = () => {
     return (
         <>
             <PageContainer>
-                <Sidebar />
+                {/* <Sidebar /> */}
                 <MainContent>
                     <FormContainer>
                         <InputInfo 
