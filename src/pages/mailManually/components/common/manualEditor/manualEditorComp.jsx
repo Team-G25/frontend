@@ -168,7 +168,7 @@ const MailEditor = () => {
             </MainArea>
             <BottomArea>
                 <BottomLeft>
-                    <FileInput width="1200px" onFileSelect={setAttachments} />
+                    <FileInput width="1300px" onFileSelect={setAttachments} />
                 </BottomLeft>
                 <BottomRight>
                     <SubmitBtn onSave={handleSave} onSend={openModal} />

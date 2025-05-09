@@ -14,10 +14,10 @@ export const MainContent = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  align-items: center;
   width: 100%;
   height: 100vh;
   padding: 20px;
   overflow-y: auto;
   border-left: 2px solid ${theme.colors.gray1};
+  margin: 0 auto;
 `;
