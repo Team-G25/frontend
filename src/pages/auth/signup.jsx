@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import TermsAgreement from './components/menu/TermsAgreement';
 import IdentityVerification from './components/menu/IdentityVerification';
 import ProfileSetup from './components/menu/ProfileSetup';
-import SideBar from './components/sideBar/SideBar';
+import Sidebar from './components/sidebar/Sidebar';
 
 const SignUpPage = () => {
   const [step, setStep] = useState('terms');
@@ -33,7 +33,7 @@ const SignUpPage = () => {
 
   return (
     <PageWrapper>
-      <SideBar step={step} setStep={setStep} />
+      <Sidebar step={step} setStep={setStep} />
       <ContentWrapper>{renderStepComponent()}</ContentWrapper>
     </PageWrapper>
   );
