@@ -24,8 +24,8 @@ import SubmitAlert from '@components/common/submitAlert/SubmitAlertModal';
 import { postRefineMail } from '@apis/aiMail/postRefineMail';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
 import { postMail } from '@apis/postMail';
-import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { getProfile } from '@apis/member/getProfile';
+import { writeDraft } from '@/apis/temporary/writeDraft';
 
 const MailEditor = ({ aiContent }) => {
   const [showModal, setShowModal] = useState(false);
@@ -58,15 +58,14 @@ const MailEditor = ({ aiContent }) => {
   // 임시 저장
   const handleSave = async () => {
     try {
-      await postCustomizeTemplate({
-        customTitle: subject,
-        customContent: content,
-        userId: 1, // TODO: 추후 로그인 연동 시 수정
+      await writeDraft({
+        email: sender,
+        content,
       });
       alert('임시 메일 저장 성공!');
     } catch (err) {
       console.error('임시 저장 실패:', err);
-      alert('임시메일 저장 실패');
+      alert('임시 메일 저장 실패');
     }
   };
 
