@@ -84,7 +84,7 @@ export const Textarea = styled.textarea`
     border: none;
     border-radius: 12px;
     background-color: ${theme.colors.white1};
-    padding: 24px;
+    padding: 48px;
     color: ${theme.colors.black1};
     font-family: ${theme.font.family.basic};
     font-weight: ${theme.font.weight.regular};
