@@ -57,7 +57,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       setShowModal(true);
     } catch {
-      alert('저장 실패');
+      alert('템플릿 내용 수정 실패');
     }
   };
 
