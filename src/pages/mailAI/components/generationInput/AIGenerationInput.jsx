@@ -45,7 +45,7 @@ const AIGenerationInput = ({ onSubmit }) => {
         <Textarea
           value={input}
           onChange={handleChange}
-          placeholder="예: 개인 사정으로 인한 회의 불참 메일"
+          placeholder="예: 개인 사정으로 인한 회의 불참 메일 작성해줘"
         />
         <Counter>
           {input.length}/{MAX_LENGTH}자

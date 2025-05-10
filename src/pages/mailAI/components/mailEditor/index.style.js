@@ -67,6 +67,16 @@ export const MainArea = styled.div`
   overflow: hidden;
 `;
 
+export const FeedbackBox = styled.div`
+  padding-left: 8px;
+  height: 580px;
+  overflow-y: auto;
+  background-color: #f9f9f9;
+  border-radius: 12px;
+  font-size: 14px;
+  white-space: pre-wrap;
+`;
+
 export const ContentBox = styled.div`
   flex: 1;
   display: flex;
