@@ -18,6 +18,8 @@ import {
 import FileInput from '@/components/common/fileInput/FileInputForm';
 import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
 import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
+import SaveAlert from '@/components/common/presaveAlert/SaveAlertModal';
+import SubmitAlert from '@/components/common/submitAlert/SubmitAlertModal';
 
 import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { postMail } from '@apis/postMail';
@@ -33,6 +35,9 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [sender, setSender] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [aiFeedback, setAIFeedback] = useState('');
+  const [showDraftAlert, setShowDraftAlert] = useState(false);
+  const [draftFailed, setDraftFailed] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const userId = 1;
 
@@ -51,11 +56,13 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   // 임시저장만 수행하는 로직
   const handleSaveDraftOnly = async () => {
     try {
-      await saveMail(sender, subject, templateContent); 
-      alert('임시 메일 저장 성공!');
+      await saveMail(sender, subject);
+      setDraftFailed(false);
     } catch (err) {
       console.error(err);
-      alert('임시 메일 저장 실패');
+      setDraftFailed(true);
+    } finally {
+      setShowDraftAlert(true);
     }
   };
 
@@ -85,6 +92,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       alert('메일 전송 완료!');
       setShowModal(false);
+      setShowSuccessAlert(true);
     } catch {
       alert('메일 전송 실패');
     }
@@ -187,6 +195,15 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
           onFeedback={handleAIFeedback}
         />
       )}
+
+      {showDraftAlert && (
+        <SaveAlert
+          onClose={() => setShowDraftAlert(false)}
+          draftFailed={draftFailed}
+        />
+      )}
+      
+      {showSuccessAlert && <SubmitAlert />}
     </>
   );
 };

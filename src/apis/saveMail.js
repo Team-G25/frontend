@@ -1,4 +1,4 @@
-//임시 저장 api입니다.
+// 임시 저장 api
 import instance from './instance';
 
 export const saveMail = async (email, subject, body) => {

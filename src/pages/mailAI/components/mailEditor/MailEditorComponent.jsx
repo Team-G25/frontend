@@ -19,6 +19,7 @@ import {
 import FileInput from '@components/common/fileInput/FileInputForm';
 import SubmitBtn from '@components/common/submitButton/SubmitBtn';
 import AIPopUp from '@components/common/aiPopUp/AIPopUpModal';
+import SaveAlert from '@components/common/presaveAlert/SaveAlertModal';
 import SubmitAlert from '@components/common/submitAlert/SubmitAlertModal';
 
 import { postRefineMail } from '@apis/aiMail/postRefineMail';
@@ -35,6 +36,8 @@ const MailEditor = ({ aiContent }) => {
   const [sender, setSender] = useState('');
   const [content, setContent] = useState(aiContent);
   const [attachments, setAttachments] = useState([]);
+  const [showDraftAlert, setShowDraftAlert] = useState(false);
+  const [draftFailed, setDraftFailed] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   // 최초 AI 생성 내용 반영
@@ -59,10 +62,12 @@ const MailEditor = ({ aiContent }) => {
   const handleSaveDraftOnly = async () => {
     try {
       await saveMail(sender, subject);
-      alert('임시 메일 저장 성공!');
+      setDraftFailed(false);
     } catch (err) {
       console.error(err);
-      alert('임시 메일 저장 실패');
+      setDraftFailed(true);
+    } finally {
+      setShowDraftAlert(true);
     }
   };
 
@@ -176,6 +181,13 @@ const MailEditor = ({ aiContent }) => {
           onClose={() => setShowModal(false)}
           onSend={handleSendMail}
           onFeedback={handleAIFeedback}
+        />
+      )}
+
+      {showDraftAlert && (
+        <SaveAlert
+          onClose={() => setShowDraftAlert(false)}
+          draftFailed={draftFailed}
         />
       )}
 
