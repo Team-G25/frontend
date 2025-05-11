@@ -25,7 +25,7 @@ import { postRefineMail } from '@apis/aiMail/postRefineMail';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
 import { postMail } from '@apis/postMail';
 import { getProfile } from '@apis/member/getProfile';
-import { writeDraft } from '@/apis/temporary/writeDraft';
+import { saveMail } from '@/apis/saveMail';
 
 const MailEditor = ({ aiContent }) => {
   const [showModal, setShowModal] = useState(false);
@@ -58,10 +58,7 @@ const MailEditor = ({ aiContent }) => {
   // 임시 저장
   const handleSave = async () => {
     try {
-      await writeDraft({
-        email: sender,
-        content,
-      });
+      await saveMail(sender, content); 
       alert('임시 메일 저장 성공!');
     } catch (err) {
       console.error('임시 저장 실패:', err);
