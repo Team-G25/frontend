@@ -45,7 +45,7 @@ const MailEditor = () => {
                 const profile = await getProfile();
                 setSenderEmail(`${profile.nickname}@mailergo.io.kr`);
             } catch {
-                setSenderEmail('0000@mailergo.io.kr');
+                setSenderEmail('user@mailergo.io.kr');
             }
         };
         fetchSender();
@@ -64,13 +64,22 @@ const MailEditor = () => {
         setShowModal(true);
     };
 
+
     const handleSave = async () => {
         try {
-            console.log("보낼 내용:", content, "보낸 사람:", senderEmail);
-            await saveMail(senderEmail, content);
+            const payload = {
+                email: senderEmail, 
+                content: {
+                    subject: mailTitle,
+                    body: content,
+                },
+            };
+            console.log("전송할 데이터:", payload);
+            await saveMail(payload);
+
             alert('임시 메일 저장 성공!');
         } catch(error) {
-            console.log('메일 저장 실패',error);
+            console.log('메일 저장 실패', error.message);
         }
     };
 
@@ -168,7 +177,7 @@ const MailEditor = () => {
             </MainArea>
             <BottomArea>
                 <BottomLeft>
-                    <FileInput width="1300px" onFileSelect={setAttachments} />
+                    <FileInput width="1200px" onFileSelect={setAttachments} />
                 </BottomLeft>
                 <BottomRight>
                     <SubmitBtn onSave={handleSave} onSend={openModal} />
