@@ -1,34 +1,34 @@
-import styled from "styled-components";
-import theme from "@/styles/theme";
+import styled from 'styled-components';
+import theme from '@/styles/theme';
 
 export const TopContainer = styled.div`
-    display: flex;
-    justify-content: left;
-    position: relative
-    height: 30px;
-    width: 1200px;
-    user-select: none; 
+  display: flex;
+  width: 1200px;
+  height: 30px;
+  user-select: none;
 `;
 
 export const TitleFrame = styled.div`
-    left: 0;
-    top: 0;
-    width: 900px;
-    postion: absolute;
-    background-color: ${theme.colors.pink_hover};
+  flex: 3;
+  background-color: ${theme.colors.pink_hover};
+  display: flex;
+  align-items: center;
+  padding-left: 18px;
 
-    font-family: ${theme.font.basic};
-    font-size: ${theme.font.size.medium};
-    color: ${theme.colors.black1};
+  font-family: ${theme.font.basic};
+  font-size: ${theme.font.size.medium};
+  color: ${theme.colors.black1};
 `;
 
 export const DateFrame = styled.div`
-    left: 0;
-    top: 0;
-    width: 300px;
-    background-color: ${theme.colors.red};
+  flex: 1;
+  background-color: ${theme.colors.red};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-right: 12px;
 
-    font-family: ${theme.font.basic};
-    font-size: ${theme.font.size.medium};
-    color: ${theme.colors.white};
+  font-family: ${theme.font.basic};
+  font-size: ${theme.font.size.medium};
+  color: ${theme.colors.white};
 `;

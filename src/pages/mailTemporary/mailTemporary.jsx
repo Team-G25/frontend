@@ -14,13 +14,13 @@ import MailButton from './components/common/mailButton/mailBtn';
 import DeleteModal from './components/common/deletePopuUp/deletePopUpModal';
 
 const MailTemporary = () => {
-  const [drafts, setDrafts] = useState([]); //현재 페이지에서 보일 데이터
-  const [editDraft, setEditDraft] = useState(null); //편집중 상태
+  const [drafts, setDrafts] = useState([]); // 현재 페이지에서 보일 데이터
+  const [editDraft, setEditDraft] = useState(null); // 편집중 상태
   const [isLoading, setIsLoading] = useState(false);
-  const [showModal, setShowModal] = useState(false); //삭제 버튼 누를시 모달띄움
-  const [selectedMailID, setSelectedMailID] = useState(null); //메일버튼 누를시 id값을 저장하게됩니다
+  const [showModal, setShowModal] = useState(false); // 삭제 버튼 누를 시 모달 띄움
+  const [selectedMailID, setSelectedMailID] = useState(null); // 메일버튼 누를 시 id값 저장
 
-  //전체 메일 갖고오기
+  // 전체 메일 가져오기
   useEffect(() => {
     const loadAllDrafts = async () => {
       setIsLoading(true);
@@ -38,18 +38,18 @@ const MailTemporary = () => {
     loadAllDrafts();
   }, []);
 
-  //메일 선택 핸들러
+  // 메일 선택 핸들러
   const handleSelectedMail = (mailID) => {
     setSelectedMailID((prevId) => (prevId === mailID ? null : mailID));
   };
 
-  //삭제 누를시 모달창 띄우기
+  // 삭제 누를 시 모달창 띄우기
   const handleDelete = async () => {
     setShowModal(true);
     console.log('모달창 띄웁니다.');
   };
 
-  //메일 전체 삭제
+  // 메일 전체 삭제
   const handleAllDelete = async (draftID) => {
     try {
       await deleteAllDrafts(draftID);
@@ -62,7 +62,7 @@ const MailTemporary = () => {
     }
   };
 
-  //선택한 메일 삭제(단일 삭제)
+  // 선택한 메일 삭제 (단일 삭제)
   const handleOneDelete = async (draftID) => {
     if (!draftID) return;
 
@@ -79,23 +79,23 @@ const MailTemporary = () => {
     }
   };
 
-  //임시 메일 편집 상태설정
+  // 임시 메일 편집 상태 설정
   const handleEdit = (mail) => {
     setEditDraft(mail);
   };
 
-  //임시 메일 편집 상태해제
+  // 임시 메일 편집 상태 해제
   const handleCancelEdit = () => {
     setEditDraft(null);
   };
 
-  //모달 닫기
+  // 모달 닫기
   const handleClose = () => {
     setShowModal(false);
     console.log('모달 닫습니다.');
   };
 
-  //메일 보내지면 클릭했던 버튼 사라집니다.
+  // 메일 보내지면 해당 메일 삭제
   const handleMailSent = (sentDraftID) => {
     handleOneDelete(sentDraftID);
   };
@@ -104,7 +104,6 @@ const MailTemporary = () => {
     <PageContainer>
       <Sidebar />
       <MainContent>
-        {/* 편집중인 메일이 있으면 */}
         {editDraft ? (
           <MailEditor
             draft={editDraft}
@@ -116,23 +115,31 @@ const MailTemporary = () => {
             <TopButton onDelete={handleDelete} />
             <Top />
             {drafts.length === 0 && !isLoading ? (
-              <Bottom1 /> //서버에 보관한 메일이없으면 요 컴포넌트가 뜹니다.
+              <Bottom1 />
             ) : (
-              drafts.map((draft) => (
-                <MailButton
-                  key={draft.id}
-                  mailTitle={draft.content}
-                  mailDate={draft.savedAt}
-                  isSelected={selectedMailID === draft.id}
-                  onClick={() => handleSelectedMail(draft.id)}
-                  onEdit={() => handleEdit(draft)}
-                />
-              ))
+              drafts.map((draft) => {
+                let parsed = {};
+                try {
+                  parsed = JSON.parse(draft.content);
+                } catch (e) {
+                  console.error('임시메일 파싱 오류:', draft.content);
+                }
+
+                return (
+                  <MailButton
+                    key={draft.id}
+                    mailTitle={parsed.subject || '(제목 없음)'}
+                    mailDate={draft.savedAt}
+                    isSelected={selectedMailID === draft.id}
+                    onClick={() => handleSelectedMail(draft.id)}
+                    onEdit={() => handleEdit(draft)}
+                  />
+                );
+              })
             )}
           </>
         )}
 
-        {/* MODAL screen */}
         {showModal && (
           <DeleteModal
             onClose={handleClose}
