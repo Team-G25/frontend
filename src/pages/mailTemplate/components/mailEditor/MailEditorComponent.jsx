@@ -18,12 +18,15 @@ import {
 import FileInput from '@/components/common/fileInput/FileInputForm';
 import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
 import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
+import SaveAlert from '@/components/common/presaveAlert/SaveAlertModal';
+import SubmitAlert from '@/components/common/submitAlert/SubmitAlertModal';
 
 import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { postMail } from '@apis/postMail';
 import { postAIFeedback } from '@apis/templete/postAIFeedback';
 import { getProfile } from '@apis/member/getProfile';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
+import { saveMail } from '@/apis/saveMail';
 
 const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -32,6 +35,9 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [sender, setSender] = useState('');
   const [attachments, setAttachments] = useState([]);
   const [aiFeedback, setAIFeedback] = useState('');
+  const [showDraftAlert, setShowDraftAlert] = useState(false);
+  const [draftFailed, setDraftFailed] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
   const userId = 1;
 
@@ -47,7 +53,21 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
     fetchSender();
   }, []);
 
-  const handleSave = async () => {
+  // 임시저장만 수행하는 로직
+  const handleSaveDraftOnly = async () => {
+    try {
+      await saveMail(sender, subject);
+      setDraftFailed(false);
+    } catch (err) {
+      console.error(err);
+      setDraftFailed(true);
+    } finally {
+      setShowDraftAlert(true);
+    }
+  };
+
+  // 템플릿 수정 내용 저장 + 모달 열기 로직
+  const handleSaveAndOpenModal = async () => {
     try {
       await postCustomizeTemplate({
         templateId,
@@ -57,7 +77,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       setShowModal(true);
     } catch {
-      alert('저장 실패');
+      alert('템플릿 저장 실패');
     }
   };
 
@@ -72,6 +92,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       alert('메일 전송 완료!');
       setShowModal(false);
+      setShowSuccessAlert(true);
     } catch {
       alert('메일 전송 실패');
     }
@@ -159,7 +180,10 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
             <FileInput width="930px" onFileSelect={setAttachments} />
           </BottomLeft>
           <BottomRight>
-            <SubmitBtn onSave={handleSave} onSend={handleSave} />
+            <SubmitBtn
+              onSave={handleSaveDraftOnly}
+              onSend={handleSaveAndOpenModal}
+            />
           </BottomRight>
         </BottomArea>
       </EditorContainer>
@@ -171,6 +195,15 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
           onFeedback={handleAIFeedback}
         />
       )}
+
+      {showDraftAlert && (
+        <SaveAlert
+          onClose={() => setShowDraftAlert(false)}
+          draftFailed={draftFailed}
+        />
+      )}
+      
+      {showSuccessAlert && <SubmitAlert />}
     </>
   );
 };
