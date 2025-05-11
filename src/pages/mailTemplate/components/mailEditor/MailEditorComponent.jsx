@@ -24,6 +24,7 @@ import { postMail } from '@apis/postMail';
 import { postAIFeedback } from '@apis/templete/postAIFeedback';
 import { getProfile } from '@apis/member/getProfile';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
+import { saveMail } from '@/apis/saveMail';
 
 const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -47,7 +48,19 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
     fetchSender();
   }, []);
 
-  const handleSave = async () => {
+  // 임시저장만 수행하는 로직
+  const handleSaveDraftOnly = async () => {
+    try {
+      await saveMail(sender, subject, templateContent); 
+      alert('임시 메일 저장 성공!');
+    } catch (err) {
+      console.error(err);
+      alert('임시 메일 저장 실패');
+    }
+  };
+
+  // 템플릿 수정 내용 저장 + 모달 열기 로직
+  const handleSaveAndOpenModal = async () => {
     try {
       await postCustomizeTemplate({
         templateId,
@@ -57,7 +70,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       setShowModal(true);
     } catch {
-      alert('템플릿 내용 수정 실패');
+      alert('템플릿 저장 실패');
     }
   };
 
@@ -159,7 +172,10 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
             <FileInput width="930px" onFileSelect={setAttachments} />
           </BottomLeft>
           <BottomRight>
-            <SubmitBtn onSave={handleSave} onSend={handleSave} />
+            <SubmitBtn
+              onSave={handleSaveDraftOnly}
+              onSend={handleSaveAndOpenModal}
+            />
           </BottomRight>
         </BottomArea>
       </EditorContainer>

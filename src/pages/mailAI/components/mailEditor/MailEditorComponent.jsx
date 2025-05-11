@@ -56,12 +56,12 @@ const MailEditor = ({ aiContent }) => {
   }, []);
 
   // 임시 저장
-  const handleSave = async () => {
+  const handleSaveDraftOnly = async () => {
     try {
-      await saveMail(sender, content); 
+      await saveMail(sender, subject);
       alert('임시 메일 저장 성공!');
     } catch (err) {
-      console.error('임시 저장 실패:', err);
+      console.error(err);
       alert('임시 메일 저장 실패');
     }
   };
@@ -166,7 +166,7 @@ const MailEditor = ({ aiContent }) => {
             <FileInput width="930px" onFileSelect={setAttachments} />
           </BottomLeft>
           <BottomRight>
-            <SubmitBtn onSave={handleSave} onSend={handleSend} />
+            <SubmitBtn onSave={handleSaveDraftOnly} onSend={handleSend} />
           </BottomRight>
         </BottomArea>
       </EditorContainer>
