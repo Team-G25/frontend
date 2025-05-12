@@ -61,7 +61,7 @@ const MailEditor = ({ aiContent }) => {
   // 임시 저장
   const handleSaveDraftOnly = async () => {
     try {
-      await saveMail(sender, subject);
+      await saveMail(sender, subject, content);
       setDraftFailed(false);
     } catch (err) {
       console.error(err);

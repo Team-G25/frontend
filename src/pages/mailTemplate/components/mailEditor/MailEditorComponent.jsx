@@ -56,7 +56,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   // 임시저장만 수행하는 로직
   const handleSaveDraftOnly = async () => {
     try {
-      await saveMail(sender, subject);
+      await saveMail(sender, subject, templateContent);
       setDraftFailed(false);
     } catch (err) {
       console.error(err);
