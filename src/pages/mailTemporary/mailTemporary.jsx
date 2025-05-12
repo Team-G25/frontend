@@ -7,7 +7,7 @@ import {
 import { PageContainer, MainContent } from './index.style';
 import Bottom1 from './components/common/bottom/bottom1';
 import Sidebar from '@/components/common/sideBar/SideBarComponent';
-import MailEditor from '../mailTemplate/components/mailEditor/MailEditorComponent';
+import MailEditor from '../mailTemporary/components/common/mailEditor/mailEditorComponent';
 import TopButton from './components/common/topButton/topBtn';
 import Top from './components/common/top/TopContent';
 import MailButton from './components/common/mailButton/mailBtn';

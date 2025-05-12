@@ -26,7 +26,7 @@ import FileInput from "@/components/common/fileInput/FileInputForm";
 import AIPopUp from "@/components/common/aiPopUp/AIPopUpModal";
 import SubmitBtn from "@/components/common/submitButton/SubmitBtn";
 import SubmitAlert from "@/components/common/submitAlert/SubmitAlertModal";
-
+import SaveAlert from "@/components/common/presaveAlert/SaveAlertModal";
 
 
 const MailEditor = () => {
@@ -38,7 +38,9 @@ const MailEditor = () => {
     const [aiFeedback, setAiFeedback] = useState('');
     const [attachments, setAttachments] = useState([]); //첨부파일
     const [isMailSent, setIsMailSent] = useState(false); 
-    
+    const [isMailSaved, setIsMailSaved] = useState(false);
+    const [draftFailed, setDraftFailed] = useState(false);
+
     useEffect(() => {
         const fetchSender = async () => {
             try{
@@ -67,19 +69,13 @@ const MailEditor = () => {
 
     const handleSave = async () => {
         try {
-            const payload = {
-                email: senderEmail, 
-                content: {
-                    subject: mailTitle,
-                    body: content,
-                },
-            };
-            console.log("전송할 데이터:", payload);
-            await saveMail(payload);
-
-            alert('임시 메일 저장 성공!');
+            await saveMail(senderEmail, mailTitle, content);
+            setDraftFailed(false);
         } catch(error) {
             console.log('메일 저장 실패', error.message);
+            setDraftFailed(true);
+        } finally {
+            setIsMailSaved(true);
         }
     };
 
@@ -195,6 +191,13 @@ const MailEditor = () => {
                     handleFeedback();
                 }}
             />    
+        )}
+
+        {isMailSaved && (
+            <SaveAlert
+                onClose={() => setIsMailSaved(false)}
+                draftFailed={draftFailed}
+            />
         )}
         </>
     );

@@ -32,10 +32,23 @@ const MailEditor = ({draft, onCancel, onMailSent}) => {
     const [senderEmail, setSenderEmail] = useState(''); 
     const [aiFeedback, setAiFeedback] = useState('');
     const [mailTitle, setMailTitle] = useState('');
-    const [content, setContent] = useState(draft.content || '');
+    const [content, setContent] = useState('');
     const [attachments, setAttachments] = useState([]); //첨부파일
     const [isMailSent, setIsMailSent] = useState(false); //메일 성공 알림띄우는 상태
 
+    useEffect(() => {
+        if(draft?.content) {
+            try{
+                const parsedContent = JSON.parse(draft.content);
+                setMailTitle(parsedContent.subject || '');
+                setContent(parsedContent.body || '');
+            } catch(error) {
+                console.log("파싱 오류", error);
+                setMailTitle('');
+                setContent('');
+            }
+        }
+    }, [draft]);
 
     useEffect(() => {
         const fetchSender = async () => {
@@ -43,7 +56,7 @@ const MailEditor = ({draft, onCancel, onMailSent}) => {
                 const profile = await getProfile();
                 setSenderEmail(`${profile.nickname}@mailergo.io.kr`)
             } catch {
-                setSenderEmail('0000@mailergo.io.kr');
+                setSenderEmail('user@mailergo.io.kr');
             }
         };
         fetchSender();
