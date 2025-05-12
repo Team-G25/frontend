@@ -1,10 +1,12 @@
 // 임시 저장 api
 import instance from './instance';
 
-export const saveMail = async (email, subject, body) => {
+export const saveMail = async (sender, recipient, subject, body) => {
   const response = await instance.post('/temporary/write', {
-    email,
+    email: sender,
     content: {
+      receiverId: recipient,
+      senderId: sender,
       subject,
       body,
     },

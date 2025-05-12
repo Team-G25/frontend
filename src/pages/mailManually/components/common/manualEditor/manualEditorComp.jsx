@@ -69,7 +69,7 @@ const MailEditor = () => {
 
     const handleSave = async () => {
         try {
-            await saveMail(senderEmail, mailTitle, content);
+            await saveMail(senderEmail, recipientEmail, mailTitle, content);
             setDraftFailed(false);
         } catch(error) {
             console.log('메일 저장 실패', error.message);

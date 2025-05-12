@@ -36,10 +36,12 @@ const MailEditor = ({draft, onCancel, onMailSent}) => {
     const [attachments, setAttachments] = useState([]); //첨부파일
     const [isMailSent, setIsMailSent] = useState(false); //메일 성공 알림띄우는 상태
 
+    //임시저장 메일 내용물 불러오기
     useEffect(() => {
         if(draft?.content) {
             try{
-                const parsedContent = JSON.parse(draft.content);
+                const parsedContent = draft.content;
+                setRecipientEmail(parsedContent.receiverId || '');
                 setMailTitle(parsedContent.subject || '');
                 setContent(parsedContent.body || '');
             } catch(error) {
