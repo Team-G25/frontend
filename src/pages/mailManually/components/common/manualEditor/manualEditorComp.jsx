@@ -92,7 +92,6 @@ const MailEditor = () => {
                 from: senderEmail,
                 attachments,
             });
-            setShowModal(false);
             setIsMailSent(true);
         } catch  {
             alert('메일 전송 실패');
@@ -100,7 +99,6 @@ const MailEditor = () => {
     };
 
     const handleFeedback = async () => {
-        setShowModal(false);
         try{
             const {refinedContent} = await postAIFeedback(content);
             setAiFeedback(refinedContent);
@@ -114,23 +112,23 @@ const MailEditor = () => {
         <EditorContainer>
             <TopArea>
                 <InputWrapper>
-                    <Label>발신자 입력 :</Label>
+                    <Label>수신자 입력 :</Label>
                     <Input 
-                        placeholder="발신자 이메일 입력"
+                        placeholder="수신자 이메일 입력"
                         onChange={(e) => setRecipientEmail(e.target.value)}
                     />
                 </InputWrapper>
                 <InputWrapper>
                     <Label>제목 :</Label>
                     <Input 
-                        placeholder="메일 입력"
+                        placeholder="제목 입력"
                         onChange={(e) => setMailTitle(e.target.value)}
                     />
                 </InputWrapper>
                 <InputWrapper>
-                    <Label>수신자 입력 :</Label>
+                    <Label>발신자 입력 :</Label>
                     <Input 
-                        placeholder="수신자 이메일 입력"
+                        placeholder="발신자 이메일 입력"
                         value={senderEmail}
                         readOnly
                     />
@@ -188,8 +186,14 @@ const MailEditor = () => {
         {showModal && (
             <AIPopUp
                 onClose={() => setShowModal(false)}
-                onSend={handleSend}
-                onFeedback={handleFeedback}
+                onSend={() => {
+                    setShowModal(false);
+                    handleSend();
+                }}
+                onFeedback={() => {
+                    setShowModal(false);
+                    handleFeedback();
+                }}
             />    
         )}
         </>

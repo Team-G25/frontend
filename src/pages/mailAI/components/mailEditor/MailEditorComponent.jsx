@@ -13,16 +13,20 @@ import {
   ContentBox,
   Separator,
   Note,
+  FeedbackBox,
 } from './index.style';
 
-import FileInput from '@/components/common/fileInput/FileInputForm';
-import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
-import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
+import FileInput from '@components/common/fileInput/FileInputForm';
+import SubmitBtn from '@components/common/submitButton/SubmitBtn';
+import AIPopUp from '@components/common/aiPopUp/AIPopUpModal';
+import SaveAlert from '@components/common/presaveAlert/SaveAlertModal';
+import SubmitAlert from '@components/common/submitAlert/SubmitAlertModal';
 
 import { postRefineMail } from '@apis/aiMail/postRefineMail';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
 import { postMail } from '@apis/postMail';
 import { getProfile } from '@apis/member/getProfile';
+import { saveMail } from '@/apis/saveMail';
 
 const MailEditor = ({ aiContent }) => {
   const [showModal, setShowModal] = useState(false);
@@ -32,15 +36,16 @@ const MailEditor = ({ aiContent }) => {
   const [sender, setSender] = useState('');
   const [content, setContent] = useState(aiContent);
   const [attachments, setAttachments] = useState([]);
+  const [showDraftAlert, setShowDraftAlert] = useState(false);
+  const [draftFailed, setDraftFailed] = useState(false);
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  const handleSave = () => {
-    // 메일 임시저장 로직 예정
-  };
-
+  // 최초 AI 생성 내용 반영
   useEffect(() => {
     setContent(aiContent);
   }, [aiContent]);
 
+  // 보낸 사람 자동 세팅
   useEffect(() => {
     const fetchSender = async () => {
       try {
@@ -53,18 +58,51 @@ const MailEditor = ({ aiContent }) => {
     fetchSender();
   }, []);
 
+  // 임시 저장
+  const handleSaveDraftOnly = async () => {
+    try {
+      await saveMail(sender, subject);
+      setDraftFailed(false);
+    } catch (err) {
+      console.error(err);
+      setDraftFailed(true);
+    } finally {
+      setShowDraftAlert(true);
+    }
+  };
+
+  // 모달 오픈
   const handleSend = () => {
     setShowModal(true);
   };
 
+  // AI 피드백
   const handleAIFeedback = async () => {
     setShowModal(false);
     try {
-      const { refined } = await postRefineMail(aiContent);
+      const { refined } = await postRefineMail(content);
       setRefinedContent(refined);
     } catch (err) {
       alert('AI 피드백 요청 실패');
       console.error(err);
+    }
+  };
+
+  // 메일 전송
+  const handleSendMail = async () => {
+    try {
+      await postMail({
+        to: receiver,
+        from: sender,
+        subject,
+        content,
+        attachments,
+      });
+      setShowModal(false);
+      setShowSuccessAlert(true);
+    } catch (error) {
+      console.error('메일 전송 실패:', error);
+      alert('메일 전송에 실패했습니다.');
     }
   };
 
@@ -92,11 +130,7 @@ const MailEditor = ({ aiContent }) => {
 
           <InputWrapper>
             <Label>보낸 사람 :</Label>
-            <Input
-              placeholder="발신자 이메일 입력"
-              value={sender}
-              onChange={(e) => setSender(e.target.value)}
-            />
+            <Input placeholder="발신자 이메일" value={sender} readOnly />
           </InputWrapper>
         </TopArea>
 
@@ -114,21 +148,12 @@ const MailEditor = ({ aiContent }) => {
             <ContentBox>
               <Label>AI 피드백</Label>
               <Separator />
-              <Textarea
-                as="div"
+              <FeedbackBox
                 dangerouslySetInnerHTML={{
                   __html: getHighlightedDiffHTML(aiContent, refinedContent),
                 }}
-                style={{
-                  paddingLeft: '8px',
-                  height: '580px',
-                  overflowY: 'auto',
-                  backgroundColor: '#f9f9f9',
-                  borderRadius: '12px',
-                  fontSize: '14px',
-                  whiteSpace: 'pre-wrap',
-                }}
               />
+
               <Note>
                 * <span style={{ color: 'red' }}>빨간색 글씨</span>는 변경된
                 부분,
@@ -146,7 +171,7 @@ const MailEditor = ({ aiContent }) => {
             <FileInput width="930px" onFileSelect={setAttachments} />
           </BottomLeft>
           <BottomRight>
-            <SubmitBtn onSave={handleSave} onSend={handleSend} />
+            <SubmitBtn onSave={handleSaveDraftOnly} onSend={handleSend} />
           </BottomRight>
         </BottomArea>
       </EditorContainer>
@@ -154,10 +179,19 @@ const MailEditor = ({ aiContent }) => {
       {showModal && (
         <AIPopUp
           onClose={() => setShowModal(false)}
-          onSend={() => alert('전송 로직 미구현')}
+          onSend={handleSendMail}
           onFeedback={handleAIFeedback}
         />
       )}
+
+      {showDraftAlert && (
+        <SaveAlert
+          onClose={() => setShowDraftAlert(false)}
+          draftFailed={draftFailed}
+        />
+      )}
+
+      {showSuccessAlert && <SubmitAlert />}
     </>
   );
 };

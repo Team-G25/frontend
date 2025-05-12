@@ -1,8 +1,13 @@
-//임시 저장 api입니다.
-import instance from "./instance";
+// 임시 저장 api
+import instance from './instance';
 
-export const saveMail = async(payload) => {
-    const response = await instance.post('/temporary/write', payload);
-    
-    return response.data;
+export const saveMail = async (email, subject, body) => {
+  const response = await instance.post('/temporary/write', {
+    email,
+    content: {
+      subject,
+      body,
+    },
+  });
+  return response.data;
 };
