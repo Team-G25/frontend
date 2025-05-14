@@ -28,10 +28,7 @@ const AIGenerationInput = ({ onSubmit }) => {
       return;
     }
 
-    // AI 생성 로직 필요
-
-    // 상위 컴포넌트에 입력 전달
-    onSubmit?.(input); // optional chaining 사용
+    onSubmit?.(input);
   };
 
   return (
@@ -51,7 +48,6 @@ const AIGenerationInput = ({ onSubmit }) => {
           {input.length}/{MAX_LENGTH}자
         </Counter>
 
-        {/* 입력이 있을 때만 버튼 노출 */}
         {input.trim() && (
           <SubmitButtonWrapper>
             <AISubmitBtn onClick={handleSubmit} />
