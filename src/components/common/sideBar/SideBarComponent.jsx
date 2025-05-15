@@ -18,6 +18,7 @@ import DefaultProfile from '../../../assets/svgs/ic_profile.svg?react';
 
 import useUserStore from '@pages/auth/store/userStore';
 import { useLogout } from '@pages/auth/utils/authService';
+import Spinner from '../spinner/SpinnerComponent';
 
 const Sidebar = () => {
   const [isMailMenuOpen, setIsMailMenuOpen] = useState(false);
@@ -26,7 +27,14 @@ const Sidebar = () => {
   const navigate = useNavigate();
 
   if (user === undefined) {
-    return <></>;
+    return (
+      <SidebarContainer>
+        <Logo onClick={() => navigate('/')}>
+          <LogoImage />
+        </Logo>
+        <Spinner /> {/* 로딩 중임을 시각적으로 표시 */}
+      </SidebarContainer>
+    );
   }
 
   return (
