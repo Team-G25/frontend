@@ -1,10 +1,11 @@
 import { useState } from 'react';
+import styled from 'styled-components';
+
 import AIGenerationInput from './components/generationInput/AIGenerationInput';
 import MailEditor from './components/mailEditor/MailEditorComponent';
 import Sidebar from '@/components/common/sideBar/SideBarComponent';
-import { postGenerateMail } from '@apis/aiMail/postGenerateMail';
-import styled from 'styled-components';
 import Spinner from '@components/common/spinner/SpinnerComponent';
+import { postGenerateMail } from '@apis/aiMail/postGenerateMail';
 
 const MailAIPage = () => {
   const [aiContent, setAiContent] = useState('');
@@ -13,13 +14,13 @@ const MailAIPage = () => {
   const handlePromptSubmit = async (input) => {
     try {
       setIsLoading(true);
-      const result = await postGenerateMail({ prompt: input });
+      const result = await postGenerateMail(input);
       setAiContent(result.content);
     } catch (error) {
       console.error('AI 메일 생성 실패:', error);
       alert('메일 생성을 실패했습니다.');
     } finally {
-      setIsLoading(false); 
+      setIsLoading(false);
     }
   };
 
@@ -33,7 +34,7 @@ const MailAIPage = () => {
             <Spinner />
           </SpinnerWrapper>
         )}
-        {!isLoading && aiContent !== '' && <MailEditor aiContent={aiContent} />}
+        {!isLoading && aiContent && <MailEditor aiContent={aiContent} />}
       </ContentWrapper>
     </PageWrapper>
   );

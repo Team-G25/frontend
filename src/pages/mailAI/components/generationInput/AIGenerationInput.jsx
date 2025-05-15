@@ -28,10 +28,7 @@ const AIGenerationInput = ({ onSubmit }) => {
       return;
     }
 
-    // AI 생성 로직 필요
-
-    // 상위 컴포넌트에 입력 전달
-    onSubmit?.(input); // optional chaining 사용
+    onSubmit?.(input);
   };
 
   return (
@@ -45,13 +42,12 @@ const AIGenerationInput = ({ onSubmit }) => {
         <Textarea
           value={input}
           onChange={handleChange}
-          placeholder="예: 개인 사정으로 인한 회의 불참 메일 작성해줘"
+          placeholder="예: 교수님께 내일 수업에 참석할 수 없어서 병결 처리 해달라고 요청하기  / 팀장님께 연차 사용 승인 요청하기"
         />
         <Counter>
           {input.length}/{MAX_LENGTH}자
         </Counter>
 
-        {/* 입력이 있을 때만 버튼 노출 */}
         {input.trim() && (
           <SubmitButtonWrapper>
             <AISubmitBtn onClick={handleSubmit} />
