@@ -53,7 +53,11 @@ const Sidebar = () => {
       <LoginSection onClick={user ? logout : () => navigate('/login')}>
         {user ? (
           <>
-            <ProfileImage src={user.profileUrl} alt="프로필" />
+            {user.profileUrl ? (
+              <ProfileImage src={user.profileUrl} alt="프로필" />
+            ) : (
+              <DefaultProfile />
+            )}
             <span>{user.nickname}</span>
           </>
         ) : (
