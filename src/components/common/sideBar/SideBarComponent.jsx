@@ -25,6 +25,10 @@ const Sidebar = () => {
   const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
 
+  if (user === undefined) {
+    return <></>;
+  }
+
   return (
     <SidebarContainer>
       <Logo onClick={() => navigate('/')}>
