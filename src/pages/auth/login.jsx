@@ -1,32 +1,45 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { loginUser } from '@apis/auth/authApis'; 
-
 import MailerLogo from '@assets/svgs/Mailer-logo.svg?react';
-import { FormWrapper, Input, LoginButton, LogoWrapper, PageWrapper, SignUpLink, SignUpText } from './login.style';
+import {
+  FormWrapper,
+  Input,
+  LoginButton,
+  LogoWrapper,
+  PageWrapper,
+  SignUpLink,
+  SignUpText,
+} from './login.style';
+import useUserStore from './store/userStore';
+import { loginAndFetchUser } from './utils/authService';
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const setUser = useUserStore((state) => state.setUser);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = async () => {
     try {
-      const res = await loginUser({ email, password });
-      console.log('로그인 성공:', res);
+      const userInfo = await loginAndFetchUser({ email, password });
+      setUser(userInfo); 
       alert('로그인 성공!');
-      navigate('/'); // 로그인 성공 시 메인으로 이동
+      navigate('/');
     } catch (err) {
-      console.error('로그인 실패:', err);
-      alert('이메일 또는 비밀번호를 확인해주세요.');
+      console.error(err);
+      alert('다시 시도해 주세요.');
     }
+  };
+
+  const handleLogoClick = () => {
+    navigate('/');
   };
 
   return (
     <PageWrapper>
-      <LogoWrapper>
+      <LogoWrapper onClick={handleLogoClick}>
         <MailerLogo />
       </LogoWrapper>
 
@@ -43,7 +56,9 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <LoginButton type="submit" onClick={handleLogin}>로그인</LoginButton>
+        <LoginButton type="submit" onClick={handleLogin}>
+          로그인
+        </LoginButton>
 
         <SignUpText>
           처음 사용하시는 건가요?

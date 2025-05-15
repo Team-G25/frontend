@@ -12,6 +12,7 @@ export const PageWrapper = styled.div`
 
 export const LogoWrapper = styled.div`
   margin-bottom: 60px;
+  cursor: pointer;
 
   svg {
     width: 300px;
@@ -58,7 +59,7 @@ export const LoginButton = styled.button`
 export const SignUpText = styled.div`
   margin-top: 20px;
   text-align: center;
-  font-size: ${theme.font.size.xSmall};
+  font-size: ${theme.font.size.small};
   font-weight: ${theme.font.weight.regular};
   color: ${theme.colors.black1};
 `;
