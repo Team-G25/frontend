@@ -7,18 +7,15 @@ import MainImage3 from '../assets/images/main-image3.svg?react';
 import MainImage4 from '../assets/images/main-image4.svg?react';
 import MainImage5 from '../assets/images/main-image5.svg?react';
 
-const imageComponents = [
-  MainImage1,
-  MainImage2,
-  MainImage3,
-  MainImage4,
-  MainImage5,
-];
+import useUserStore from '@/pages/auth/store/userStore';
 
 const Home = () => {
-  // 렌더링 시 한 번만 랜덤 이미지 선택
-  const RandomImage =
-    imageComponents[Math.floor(Math.random() * imageComponents.length)];
+  const user = useUserStore((state) => state.user);
+
+  const guestImages = [MainImage2, MainImage3, MainImage4, MainImage5];
+  const RandomImage = user
+    ? MainImage1
+    : guestImages[Math.floor(Math.random() * guestImages.length)];
 
   return (
     <Container>
