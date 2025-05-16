@@ -17,9 +17,6 @@ export const MainContent = styled.div`
     align-items: center;
     width: 100%;
     padding: 20px;
-
-    height: 100vh;
     overflow-y: auto;
-
     border-left: 2px solid ${theme.colors.gray1};
 `;

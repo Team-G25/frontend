@@ -53,14 +53,6 @@ const MailEditor = () => {
         fetchSender();
     }, []);
 
-    if(isMailSent){
-        return(
-            <SuccessWrapper>
-                <SubmitAlert />
-            </SuccessWrapper>
-        );
-    };
-
     const openModal = () => {
         console.log("모달 열립니다.");
         setShowModal(true);
@@ -101,6 +93,14 @@ const MailEditor = () => {
         } catch {
             alert('AI 피드백 실패');
         }
+    };
+
+    if(isMailSent){
+        return(
+            <SuccessWrapper>
+                <SubmitAlert />
+            </SuccessWrapper>
+        );
     };
 
     return(

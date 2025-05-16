@@ -76,6 +76,8 @@ const MailTemporary = () => {
       console.log('메일 삭제 완료', draftID);
     } catch (error) {
       console.log('메일 삭제 오류', error);
+    } finally {
+      setShowModal(false);
     }
   };
 
@@ -120,10 +122,9 @@ const MailTemporary = () => {
               drafts.map((draft) => {
                 let parsed = {};
                 try {
-                  // parsed = JSON.parse(draft.content);
                   parsed = draft.content;
-                } catch (e) {
-                  console.error('임시메일 파싱 오류:', draft.content);
+                } catch (error) {
+                  console.log('임시메일 파싱 오류:', error);
                 }
 
                 return (
