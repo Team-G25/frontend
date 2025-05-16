@@ -7,6 +7,6 @@ export const getProfile = async () => {
 
   return {
     nickname: info?.nickname || 'user',
-    profileUrl: info?.profileUrl || defaultProfile,
+    profileImageUrl: info?.profileImageUrl || defaultProfile,
   };
 };
