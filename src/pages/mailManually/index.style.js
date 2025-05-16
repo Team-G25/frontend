@@ -16,7 +16,7 @@ export const MainContent = styled.div`
   flex-direction: column;
   width: 100%;
   height: 100vh;
-  padding: 20px;
+  padding: 24px 50px;
   overflow-y: auto;
   border-left: 2px solid ${theme.colors.gray1};
   margin: 0 auto;

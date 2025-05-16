@@ -26,7 +26,7 @@ import FileInput from "@/components/common/fileInput/FileInputForm";
 import AIPopUp from "@/components/common/aiPopUp/AIPopUpModal";
 import SubmitBtn from "@/components/common/submitButton/SubmitBtn";
 import SubmitAlert from "@/components/common/submitAlert/SubmitAlertModal";
-
+import SaveAlert from "@/components/common/presaveAlert/SaveAlertModal";
 
 
 const MailEditor = () => {
@@ -38,39 +38,36 @@ const MailEditor = () => {
     const [aiFeedback, setAiFeedback] = useState('');
     const [attachments, setAttachments] = useState([]); //첨부파일
     const [isMailSent, setIsMailSent] = useState(false); 
-    
+    const [isMailSaved, setIsMailSaved] = useState(false);
+    const [draftFailed, setDraftFailed] = useState(false);
+
     useEffect(() => {
         const fetchSender = async () => {
             try{
                 const profile = await getProfile();
                 setSenderEmail(`${profile.nickname}@mailergo.io.kr`);
             } catch {
-                setSenderEmail('0000@mailergo.io.kr');
+                setSenderEmail('user@mailergo.io.kr');
             }
         };
         fetchSender();
     }, []);
-
-    if(isMailSent){
-        return(
-            <SuccessWrapper>
-                <SubmitAlert />
-            </SuccessWrapper>
-        );
-    };
 
     const openModal = () => {
         console.log("모달 열립니다.");
         setShowModal(true);
     };
 
+
     const handleSave = async () => {
         try {
-            console.log("보낼 내용:", content, "보낸 사람:", senderEmail);
-            await saveMail(senderEmail, content);
-            alert('임시 메일 저장 성공!');
+            await saveMail(senderEmail, recipientEmail, mailTitle, content);
+            setDraftFailed(false);
         } catch(error) {
-            console.log('메일 저장 실패',error);
+            console.log('메일 저장 실패', error.message);
+            setDraftFailed(true);
+        } finally {
+            setIsMailSaved(true);
         }
     };
 
@@ -83,7 +80,6 @@ const MailEditor = () => {
                 from: senderEmail,
                 attachments,
             });
-            setShowModal(false);
             setIsMailSent(true);
         } catch  {
             alert('메일 전송 실패');
@@ -91,7 +87,6 @@ const MailEditor = () => {
     };
 
     const handleFeedback = async () => {
-        setShowModal(false);
         try{
             const {refinedContent} = await postAIFeedback(content);
             setAiFeedback(refinedContent);
@@ -100,28 +95,36 @@ const MailEditor = () => {
         }
     };
 
+    if(isMailSent){
+        return(
+            <SuccessWrapper>
+                <SubmitAlert />
+            </SuccessWrapper>
+        );
+    };
+
     return(
         <>
         <EditorContainer>
             <TopArea>
                 <InputWrapper>
-                    <Label>발신자 입력 :</Label>
+                    <Label>수신자 입력 :</Label>
                     <Input 
-                        placeholder="발신자 이메일 입력"
+                        placeholder="수신자 이메일 입력"
                         onChange={(e) => setRecipientEmail(e.target.value)}
                     />
                 </InputWrapper>
                 <InputWrapper>
                     <Label>제목 :</Label>
                     <Input 
-                        placeholder="메일 입력"
+                        placeholder="제목 입력"
                         onChange={(e) => setMailTitle(e.target.value)}
                     />
                 </InputWrapper>
                 <InputWrapper>
-                    <Label>수신자 입력 :</Label>
+                    <Label>발신자 입력 :</Label>
                     <Input 
-                        placeholder="수신자 이메일 입력"
+                        placeholder="발신자 이메일 입력"
                         value={senderEmail}
                         readOnly
                     />
@@ -168,7 +171,7 @@ const MailEditor = () => {
             </MainArea>
             <BottomArea>
                 <BottomLeft>
-                    <FileInput width="1300px" onFileSelect={setAttachments} />
+                    <FileInput width="1200px" onFileSelect={setAttachments} />
                 </BottomLeft>
                 <BottomRight>
                     <SubmitBtn onSave={handleSave} onSend={openModal} />
@@ -179,9 +182,22 @@ const MailEditor = () => {
         {showModal && (
             <AIPopUp
                 onClose={() => setShowModal(false)}
-                onSend={handleSend}
-                onFeedback={handleFeedback}
+                onSend={() => {
+                    setShowModal(false);
+                    handleSend();
+                }}
+                onFeedback={() => {
+                    setShowModal(false);
+                    handleFeedback();
+                }}
             />    
+        )}
+
+        {isMailSaved && (
+            <SaveAlert
+                onClose={() => setIsMailSaved(false)}
+                draftFailed={draftFailed}
+            />
         )}
         </>
     );

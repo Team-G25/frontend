@@ -9,7 +9,7 @@ export const StyledFrame = styled.div`
         $isSelected? theme.colors.gray1 : theme.colors.white1};
     cursor: pointer;
     user-select: none;
-    flex-shrink: none;
+    flex-shrink: 0;
     overflow: hidden;
     align-items: center;
     box-sizing: border-box;
