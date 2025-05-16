@@ -122,9 +122,10 @@ const MailTemporary = () => {
               drafts.map((draft) => {
                 let parsed = {};
                 try {
-                  parsed = draft.content;
-                } catch (error) {
-                  console.log('임시메일 파싱 오류:', error);
+                  parsed = JSON.parse(draft.content);
+                } catch (e) {
+                  console.error('임시메일 파싱 오류:', draft.content);
+                  console.log(e);
                 }
 
                 return (

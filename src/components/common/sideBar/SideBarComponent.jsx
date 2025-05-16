@@ -9,32 +9,40 @@ import {
   LoginSection,
   LogoImage,
   ArrowIcon,
+  ProfileImage,
 } from './index.style';
 
 import ArrowUp from '../../../assets/svgs/ic_arrow_up_black.svg?react';
 import ArrowDown from '../../../assets/svgs/ic_arrow_down.svg?react';
-import Profile from '../../../assets/svgs/ic_profile.svg?react';
+import DefaultProfile from '../../../assets/svgs/ic_profile.svg?react';
+
+import useUserStore from '@pages/auth/store/userStore';
+import { useLogout } from '@pages/auth/utils/authService';
+import Spinner from '../spinner/SpinnerComponent';
 
 const Sidebar = () => {
   const [isMailMenuOpen, setIsMailMenuOpen] = useState(false);
+  const logout = useLogout();
+  const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
 
-  const handleLoginClick = () => {
-    // localStorage에 isSignedUp 키로 회원가입 여부를 저장했다고 가정
-    const isSignedUp = localStorage.getItem('isSignedUp') === 'true';
-
-    if (isSignedUp) {
-      navigate('/login');
-    } else {
-      navigate('/signup');
-    }
-  };
+  if (user === undefined) {
+    return (
+      <SidebarContainer>
+        <Logo onClick={() => navigate('/')}>
+          <LogoImage />
+        </Logo>
+        <Spinner /> {/* 로딩 중임을 시각적으로 표시 */}
+      </SidebarContainer>
+    );
+  }
 
   return (
     <SidebarContainer>
       <Logo onClick={() => navigate('/')}>
         <LogoImage />
       </Logo>
+
       <MenuList>
         <MenuItem onClick={() => setIsMailMenuOpen(!isMailMenuOpen)}>
           메일 작성
@@ -53,9 +61,23 @@ const Sidebar = () => {
         )}
         <MenuItem onClick={() => navigate('/mailTemporary')}>임시보관</MenuItem>
       </MenuList>
-      <LoginSection onClick={handleLoginClick}>
-        <Profile />
-        <span>LOGIN</span>
+
+      <LoginSection onClick={user ? logout : () => navigate('/login')}>
+        {user ? (
+          <>
+            {user.profileUrl ? (
+              <ProfileImage src={user.profileUrl} alt="프로필" />
+            ) : (
+              <DefaultProfile />
+            )}
+            <span>{user.nickname}</span>
+          </>
+        ) : (
+          <>
+            <DefaultProfile />
+            <span>LOGIN</span>
+          </>
+        )}
       </LoginSection>
     </SidebarContainer>
   );
