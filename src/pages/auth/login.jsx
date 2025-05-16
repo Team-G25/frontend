@@ -11,8 +11,10 @@ import {
   SignUpLink,
   SignUpText,
 } from './login.style';
+
 import useUserStore from './store/userStore';
 import { loginAndFetchUser } from './utils/authService';
+import AlertModal from '@components/common/alertModal/CommonAlertModal'; 
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -21,15 +23,23 @@ const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [alertMessage, setAlertMessage] = useState(null); 
+
   const handleLogin = async () => {
     try {
       const userInfo = await loginAndFetchUser({ email, password });
-      setUser(userInfo); 
-      alert('로그인 성공!');
-      navigate('/');
+      setUser(userInfo);
+      setAlertMessage('로그인 성공!');
     } catch (err) {
       console.error(err);
-      alert('다시 시도해 주세요.');
+      setAlertMessage('다시 시도해 주세요.');
+    }
+  };
+
+  const handleModalClose = () => {
+    setAlertMessage(null);
+    if (alertMessage === '로그인 성공!') {
+      navigate('/');
     }
   };
 
@@ -67,6 +77,14 @@ const LoginPage = () => {
           </SignUpLink>
         </SignUpText>
       </FormWrapper>
+
+      {alertMessage && (
+        <AlertModal
+          title={alertMessage}
+          buttonText="확인"
+          onButtonClick={handleModalClose}
+        />
+      )}
     </PageWrapper>
   );
 };

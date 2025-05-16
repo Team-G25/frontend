@@ -21,6 +21,7 @@ import SubmitBtn from '@components/common/submitButton/SubmitBtn';
 import AIPopUp from '@components/common/aiPopUp/AIPopUpModal';
 import SaveAlert from '@components/common/presaveAlert/SaveAlertModal';
 import SubmitAlert from '@components/common/submitAlert/SubmitAlertModal';
+import AlertModal from '@components/common/alertModal/CommonAlertModal';
 
 import { postRefineMail } from '@apis/aiMail/postRefineMail';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
@@ -40,12 +41,13 @@ const MailEditor = ({ aiContent }) => {
   const [draftFailed, setDraftFailed] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
 
-  // 최초 AI 생성 내용 반영
+  const [isSendFailModalOpen, setIsSendFailModalOpen] = useState(false);
+  const [isFeedbackFailModalOpen, setIsFeedbackFailModalOpen] = useState(false);
+
   useEffect(() => {
     setContent(aiContent);
   }, [aiContent]);
 
-  // 보낸 사람 자동 세팅
   useEffect(() => {
     const fetchSender = async () => {
       try {
@@ -58,7 +60,6 @@ const MailEditor = ({ aiContent }) => {
     fetchSender();
   }, []);
 
-  // 임시 저장
   const handleSaveDraftOnly = async () => {
     try {
       await saveMail(sender, receiver, subject, content);
@@ -71,24 +72,21 @@ const MailEditor = ({ aiContent }) => {
     }
   };
 
-  // 모달 오픈
   const handleSend = () => {
     setShowModal(true);
   };
 
-  // AI 피드백
   const handleAIFeedback = async () => {
     setShowModal(false);
     try {
       const { refined } = await postRefineMail(content);
       setRefinedContent(refined);
     } catch (err) {
-      alert('AI 피드백 요청 실패');
       console.error(err);
+      setIsFeedbackFailModalOpen(true);
     }
   };
 
-  // 메일 전송
   const handleSendMail = async () => {
     try {
       await postMail({
@@ -102,7 +100,7 @@ const MailEditor = ({ aiContent }) => {
       setShowSuccessAlert(true);
     } catch (error) {
       console.error('메일 전송 실패:', error);
-      alert('메일 전송에 실패했습니다.');
+      setIsSendFailModalOpen(true);
     }
   };
 
@@ -153,7 +151,6 @@ const MailEditor = ({ aiContent }) => {
                   __html: getHighlightedDiffHTML(aiContent, refinedContent),
                 }}
               />
-
               <Note>
                 * <span style={{ color: 'red' }}>빨간색 글씨</span>는 변경된
                 부분,
@@ -192,6 +189,22 @@ const MailEditor = ({ aiContent }) => {
       )}
 
       {showSuccessAlert && <SubmitAlert />}
+
+      {isSendFailModalOpen && (
+        <AlertModal
+          title="메일 전송에 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setIsSendFailModalOpen(false)}
+        />
+      )}
+
+      {isFeedbackFailModalOpen && (
+        <AlertModal
+          title="AI 피드백 요청에 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setIsFeedbackFailModalOpen(false)}
+        />
+      )}
     </>
   );
 };

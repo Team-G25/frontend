@@ -20,6 +20,7 @@ import SubmitBtn from '@/components/common/submitButton/SubmitBtn';
 import AIPopUp from '@/components/common/aiPopUp/AIPopUpModal';
 import SaveAlert from '@/components/common/presaveAlert/SaveAlertModal';
 import SubmitAlert from '@/components/common/submitAlert/SubmitAlertModal';
+import AlertModal from '@/components/common/alertModal/CommonAlertModal';
 
 import { postCustomizeTemplate } from '@apis/templete/postCustomizeTemplate';
 import { postMail } from '@apis/postMail';
@@ -38,6 +39,9 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showDraftAlert, setShowDraftAlert] = useState(false);
   const [draftFailed, setDraftFailed] = useState(false);
   const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+  const [showTemplateFailAlert, setShowTemplateFailAlert] = useState(false);
+  const [showSendFailAlert, setShowSendFailAlert] = useState(false);
+  const [showAIFailAlert, setShowAIFailAlert] = useState(false);
 
   const userId = 1;
 
@@ -53,20 +57,17 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
     fetchSender();
   }, []);
 
-  // 임시저장만 수행하는 로직
   const handleSaveDraftOnly = async () => {
     try {
       await saveMail(sender, receiver, subject, templateContent);
       setDraftFailed(false);
-    } catch (err) {
-      console.error(err);
+    } catch {
       setDraftFailed(true);
     } finally {
       setShowDraftAlert(true);
     }
   };
 
-  // 템플릿 수정 내용 저장 + 모달 열기 로직
   const handleSaveAndOpenModal = async () => {
     try {
       await postCustomizeTemplate({
@@ -77,7 +78,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       });
       setShowModal(true);
     } catch {
-      alert('템플릿 저장 실패');
+      setShowTemplateFailAlert(true);
     }
   };
 
@@ -90,11 +91,10 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
         from: sender,
         attachments,
       });
-      alert('메일 전송 완료!');
       setShowModal(false);
       setShowSuccessAlert(true);
     } catch {
-      alert('메일 전송 실패');
+      setShowSendFailAlert(true);
     }
   };
 
@@ -104,7 +104,7 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
       const { refinedContent } = await postAIFeedback(templateContent);
       setAIFeedback(refinedContent);
     } catch {
-      alert('AI 피드백 실패');
+      setShowAIFailAlert(true);
     }
   };
 
@@ -202,8 +202,32 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
           draftFailed={draftFailed}
         />
       )}
-      
+
       {showSuccessAlert && <SubmitAlert />}
+
+      {showTemplateFailAlert && (
+        <AlertModal
+          title="템플릿 저장에 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setShowTemplateFailAlert(false)}
+        />
+      )}
+
+      {showSendFailAlert && (
+        <AlertModal
+          title="메일 전송에 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setShowSendFailAlert(false)}
+        />
+      )}
+
+      {showAIFailAlert && (
+        <AlertModal
+          title="AI 피드백 요청에 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setShowAIFailAlert(false)}
+        />
+      )}
     </>
   );
 };

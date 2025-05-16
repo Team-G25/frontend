@@ -10,11 +10,13 @@ import {
 } from './index.style';
 
 import AISubmitBtn from '@components/common/aiSubmitButton/AISubmitBtn';
+import AlertModal from '@components/common/alertModal/CommonAlertModal';
 
 const MAX_LENGTH = 200;
 
 const AIGenerationInput = ({ onSubmit }) => {
   const [input, setInput] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (e) => {
     if (e.target.value.length <= MAX_LENGTH) {
@@ -24,7 +26,7 @@ const AIGenerationInput = ({ onSubmit }) => {
 
   const handleSubmit = () => {
     if (!input.trim()) {
-      alert('내용을 입력해주세요.');
+      setIsModalOpen(true);
       return;
     }
 
@@ -54,6 +56,14 @@ const AIGenerationInput = ({ onSubmit }) => {
           </SubmitButtonWrapper>
         )}
       </InputArea>
+
+      {isModalOpen && (
+        <AlertModal
+          title="내용을 입력해주세요."
+          buttonText="확인"
+          onButtonClick={() => setIsModalOpen(false)}
+        />
+      )}
     </Container>
   );
 };

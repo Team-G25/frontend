@@ -4,11 +4,14 @@ import { signupUser } from '@/apis/auth/authApis';
 
 import styled from 'styled-components';
 import theme from '@styles/theme';
-import DefaultProfileIcon from '@assets/svgs/ic_profile.svg'; // 기본 프로필 아이콘
+import DefaultProfileIcon from '@assets/svgs/ic_profile.svg';
+import AlertModal from '@components/common/alertModal/CommonAlertModal'; 
 
 const ProfileSetup = ({ email, password }) => {
   const [profileImage, setProfileImage] = useState(null);
   const [name, setName] = useState('');
+  const [modalMessage, setModalMessage] = useState(null); 
+
   const fileInputRef = useRef(null);
   const navigate = useNavigate();
 
@@ -34,11 +37,18 @@ const ProfileSetup = ({ email, password }) => {
         password,
       });
       console.log('회원가입 성공:', res);
-      alert('회원가입이 완료되었습니다!');
-      navigate('/login'); // 회원가입 완료 후 로그인 페이지로 이동
+      setModalMessage('회원가입이 완료되었습니다!');
     } catch (error) {
       console.error('회원가입 실패:', error);
-      alert('회원가입에 실패했습니다.');
+      setModalMessage('회원가입에 실패했습니다.');
+    }
+  };
+
+  const handleModalClose = () => {
+    if (modalMessage === '회원가입이 완료되었습니다!') {
+      navigate('/login');
+    } else {
+      setModalMessage(null);
     }
   };
 
@@ -66,7 +76,17 @@ const ProfileSetup = ({ email, password }) => {
         onChange={(e) => setName(e.target.value)}
       />
       {isAllFilled && (
-        <SignUpButton type="submit"  onClick={handleSignUp}>회원가입하기</SignUpButton>
+        <SignUpButton type="submit" onClick={handleSignUp}>
+          회원가입하기
+        </SignUpButton>
+      )}
+
+      {modalMessage && (
+        <AlertModal
+          title={modalMessage}
+          buttonText="확인"
+          onButtonClick={handleModalClose}
+        />
       )}
     </Wrapper>
   );
@@ -86,7 +106,6 @@ const ProfileImageWrapper = styled.div`
   width: 232px;
   height: 232px;
   border-radius: 50%;
-  /* props로 받은 profileImage 유무에 따라 border 설정 */
   border: ${({ $hasImage }) => ($hasImage ? '9px solid black' : 'none')};
   overflow: hidden;
   display: flex;

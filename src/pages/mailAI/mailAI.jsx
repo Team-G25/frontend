@@ -5,11 +5,13 @@ import AIGenerationInput from './components/generationInput/AIGenerationInput';
 import MailEditor from './components/mailEditor/MailEditorComponent';
 import Sidebar from '@/components/common/sideBar/SideBarComponent';
 import Spinner from '@components/common/spinner/SpinnerComponent';
+import AlertModal from '@components/common/alertModal/CommonAlertModal';
 import { postGenerateMail } from '@apis/aiMail/postGenerateMail';
 
 const MailAIPage = () => {
   const [aiContent, setAiContent] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [errorModalOpen, setErrorModalOpen] = useState(false); 
 
   const handlePromptSubmit = async (input) => {
     try {
@@ -18,7 +20,7 @@ const MailAIPage = () => {
       setAiContent(result.content);
     } catch (error) {
       console.error('AI 메일 생성 실패:', error);
-      alert('메일 생성을 실패했습니다.');
+      setErrorModalOpen(true); 
     } finally {
       setIsLoading(false);
     }
@@ -36,6 +38,14 @@ const MailAIPage = () => {
         )}
         {!isLoading && aiContent && <MailEditor aiContent={aiContent} />}
       </ContentWrapper>
+
+      {errorModalOpen && (
+        <AlertModal
+          title="메일 생성을 실패했습니다."
+          buttonText="확인"
+          onButtonClick={() => setErrorModalOpen(false)}
+        />
+      )}
     </PageWrapper>
   );
 };

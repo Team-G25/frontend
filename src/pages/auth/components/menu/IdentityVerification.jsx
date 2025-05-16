@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import theme from '@styles/theme';
+import AlertModal from '@components/common/alertModal/CommonAlertModal';
 
 const IdentityVerification = ({
   setStep,
@@ -10,17 +11,20 @@ const IdentityVerification = ({
   setPassword,
 }) => {
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [modalMessage, setModalMessage] = useState(null);
 
   const isAllFilled = email && password && confirmPassword;
   const isPasswordMatch = password === confirmPassword;
 
   const handleComplete = () => {
     if (!isPasswordMatch) {
-      alert('비밀번호가 일치하지 않습니다.');
+      setModalMessage('비밀번호가 일치하지 않습니다.');
       return;
     }
     setStep('profile');
   };
+
+  const closeModal = () => setModalMessage(null);
 
   return (
     <Wrapper>
@@ -53,6 +57,14 @@ const IdentityVerification = ({
           </NextButton>
         )}
       </Form>
+
+      {modalMessage && (
+        <AlertModal
+          title={modalMessage}
+          buttonText="확인"
+          onButtonClick={closeModal}
+        />
+      )}
     </Wrapper>
   );
 };
