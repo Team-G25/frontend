@@ -19,18 +19,18 @@ import DefaultProfile from '../../../assets/svgs/ic_profile.svg?react';
 import useUserStore from '@pages/auth/store/userStore';
 import { useLogout } from '@pages/auth/utils/authService';
 import Spinner from '../spinner/SpinnerComponent';
-import AlertModal from '@components/common/alertModal/CommonAlertModal'; 
+import AlertModal from '@components/common/alertModal/CommonAlertModal';
 
 const Sidebar = () => {
   const [isMailMenuOpen, setIsMailMenuOpen] = useState(false);
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false); 
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
   const logout = useLogout();
   const user = useUserStore((state) => state.user);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
-    await logout(); 
-    setIsLogoutModalOpen(true); 
+    await logout();
+    setIsLogoutModalOpen(true);
   };
 
   if (user === undefined) {
@@ -77,8 +77,8 @@ const Sidebar = () => {
         <LoginSection onClick={user ? handleLogout : () => navigate('/login')}>
           {user ? (
             <>
-              {user.profileUrl ? (
-                <ProfileImage src={user.profileUrl} alt="프로필" />
+              {user.profileImageUrl ? (
+                <ProfileImage src={user.profileImageUrl} alt="프로필" />
               ) : (
                 <DefaultProfile />
               )}
