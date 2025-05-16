@@ -86,9 +86,10 @@ export const ArrowIcon = styled.span`
 `;
 
 export const ProfileImage = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   object-fit: cover;
   margin-right: 8px;
+  border: 1.4px solid #282828;
 `;
