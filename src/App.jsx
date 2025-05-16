@@ -13,11 +13,17 @@ function App() {
 
   useEffect(() => {
     const fetchUser = async () => {
+      const hasSession = document.cookie.includes('JSESSIONID');
+      if (!hasSession) {
+        clearUser(); // 세션 없으면 로그인 안 된 상태
+        return;
+      }
+
       try {
         const info = await getCurrentUser();
-        setUser(info); // 로그인 상태 복원
+        setUser(info); // 세션 있으면 사용자 정보 복원
       } catch {
-        clearUser(); 
+        clearUser();
       }
     };
 
