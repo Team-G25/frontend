@@ -28,6 +28,7 @@ import { postAIFeedback } from '@apis/templete/postAIFeedback';
 import { getProfile } from '@apis/member/getProfile';
 import { getHighlightedDiffHTML } from '@/utils/highlightDiff';
 import { saveMail } from '@/apis/saveMail';
+import useUserStore from '@/pages/auth/store/userStore';
 
 const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showModal, setShowModal] = useState(false);
@@ -43,7 +44,8 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   const [showSendFailAlert, setShowSendFailAlert] = useState(false);
   const [showAIFailAlert, setShowAIFailAlert] = useState(false);
 
-  const userId = 1;
+  const user = useUserStore((state) => state.user);
+  const userId = user?.userId;
 
   useEffect(() => {
     const fetchSender = async () => {
@@ -69,6 +71,11 @@ const MailEditor = ({ templateContent, setTemplateContent, templateId }) => {
   };
 
   const handleSaveAndOpenModal = async () => {
+    if (!userId) {
+      setShowTemplateFailAlert(true);
+      return;
+    }
+
     try {
       await postCustomizeTemplate({
         templateId,
